@@ -3,9 +3,12 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>TechVerband — Teknolojiye Yeniden Hayat Veriyoruz</title>
+<title>WeiterWert — Teknolojiye Yeniden Hayat Veriyoruz</title>
 <meta name="description" content="Kullanılmayan bilgisayarları topluyor, onarıyor ve ihtiyacı olan öğrencilere ulaştırıyoruz. Elektronik atığı azaltırken eğitime erişimi büyütüyoruz.">
 <meta name="theme-color" content="#F8F4EC">
+<link rel="icon" type="image/png" href="assets/favicon.png">
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+<meta property="og:image" content="assets/logo-full.jpg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -68,9 +71,8 @@
     white-space:nowrap;
   }
   .brand-mark{
-    width:32px;height:32px;border-radius:9px;
-    background:var(--accent);
-    display:flex;align-items:center;justify-content:center;
+    width:40px;height:40px;border-radius:10px;
+    background:#fff;object-fit:contain;
     flex-shrink:0;
   }
   .nav-links{
@@ -249,12 +251,8 @@
 <header class="nav">
   <div class="nav-inner">
     <a class="brand" href="#top">
-      <span class="brand-mark" aria-hidden="true">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M4 5h16v11H4z"/><path d="M2 19h20"/><path d="M9 19v-3"/><path d="M15 19v-3"/>
-        </svg>
-      </span>
-      TechVerband
+      <img class="brand-mark" src="assets/logo-mark.png" alt="" width="40" height="40">
+      WeiterWert
     </a>
     <nav class="nav-links" aria-label="Ana menü">
       <a href="#nasil-calisir" data-i18n="navHow">Nasıl Çalışır</a>
@@ -428,7 +426,7 @@
         </div>
       </div>
 
-      <p class="note"><strong data-i18n="noteStrong">Şeffaflık notu:</strong><span data-i18n="noteRest"> TechVerband yeni kurulan bir girişimdir. İlk cihaz teslimatlarımıza hazırlanıyoruz ve sürecin her adımını, gerçek sayılarla birlikte bu sayfada paylaşacağız.</span></p>
+      <p class="note"><strong data-i18n="noteStrong">Şeffaflık notu:</strong><span data-i18n="noteRest"> WeiterWert yeni kurulan bir girişimdir. İlk cihaz teslimatlarımıza hazırlanıyoruz ve sürecin her adımını, gerçek sayılarla birlikte bu sayfada paylaşacağız.</span></p>
     </div>
   </section>
 
@@ -450,7 +448,7 @@
           </div>
           <h3 data-i18n="help1Title">Cihaz Bağışla</h3>
           <p data-i18n="help1Desc">Kullanmadığınız bilgisayar, tablet veya telefonu bağışlayın; onarıp bir öğrenciye ulaştıralım.</p>
-          <a href="mailto:bagis@techverband.org" class="btn btn-primary" data-i18n="help1Btn">Cihaz Bağışla</a>
+          <a href="mailto:bagis@weiterwert.de" class="btn btn-primary" data-i18n="help1Btn">Cihaz Bağışla</a>
         </div>
         <div class="help-card">
           <div class="icon" aria-hidden="true">
@@ -460,7 +458,7 @@
           </div>
           <h3 data-i18n="help2Title">Taşıma Gönüllüsü Ol</h3>
           <p data-i18n="help2Desc">Bağışlanan cihazların toplama noktalarına ulaştırılmasına araç veya zamanınla destek ol.</p>
-          <a href="mailto:gonullu@techverband.org" class="btn btn-primary" data-i18n="help2Btn">Gönüllü Ol</a>
+          <a href="mailto:gonullu@weiterwert.de" class="btn btn-primary" data-i18n="help2Btn">Gönüllü Ol</a>
         </div>
         <div class="help-card">
           <div class="icon" aria-hidden="true">
@@ -470,7 +468,7 @@
           </div>
           <h3 data-i18n="help3Title">Proje Öner</h3>
           <p data-i18n="help3Desc">Bölgenizde ihtiyaç sahibi bir okul, öğrenci ya da topluluk mu var? Bize önerin.</p>
-          <a href="mailto:proje@techverband.org" class="btn btn-primary" data-i18n="help3Btn">Proje Öner</a>
+          <a href="mailto:proje@weiterwert.de" class="btn btn-primary" data-i18n="help3Btn">Proje Öner</a>
         </div>
       </div>
     </div>
@@ -481,7 +479,7 @@
 <footer>
   <div class="container footer-inner">
     <div>
-      <div class="footer-brand">TechVerband</div>
+      <div class="footer-brand">WeiterWert</div>
       <div class="footer-meta" data-i18n="footerMeta">Teknoloji ve eğitim arasında köprü kuran topluluk ağı</div>
     </div>
     <div class="footer-links">
@@ -496,7 +494,7 @@
 (function(){
   var translations = {
     tr: {
-      _title: "TechVerband — Teknolojiye Yeniden Hayat Veriyoruz",
+      _title: "WeiterWert — Teknolojiye Yeniden Hayat Veriyoruz",
       _desc: "Kullanılmayan bilgisayarları topluyor, onarıyor ve ihtiyacı olan öğrencilere ulaştırıyoruz. Elektronik atığı azaltırken eğitime erişimi büyütüyoruz.",
       navHow: "Nasıl Çalışır", navApproach: "Yaklaşımımız", navHelp: "Yardım Et", navCta: "Cihaz Bağışla",
       heroEyebrow: "Topluluk Odaklı Teknoloji Girişimi",
@@ -516,7 +514,7 @@
       approach1Title: "Elektronik atığı azaltıyoruz", approach1Desc: "Çöpe gitmek üzere olan her cihaz, onarılarak yeniden bir amaca hizmet ediyor.",
       approach2Title: "Eğitime erişimi büyütüyoruz", approach2Desc: "Bir bilgisayar, bir öğrenci için derse girebilmek ve ödevini tamamlayabilmek demek.",
       approach3Title: "Yerel bir gönüllü ağı kuruyoruz", approach3Desc: "Bağışçıları, tamircileri ve taşıma gönüllülerini aynı amaç etrafında bir araya getiriyoruz.",
-      noteStrong: "Şeffaflık notu:", noteRest: " TechVerband yeni kurulan bir girişimdir. İlk cihaz teslimatlarımıza hazırlanıyoruz ve sürecin her adımını, gerçek sayılarla birlikte bu sayfada paylaşacağız.",
+      noteStrong: "Şeffaflık notu:", noteRest: " WeiterWert yeni kurulan bir girişimdir. İlk cihaz teslimatlarımıza hazırlanıyoruz ve sürecin her adımını, gerçek sayılarla birlikte bu sayfada paylaşacağız.",
       helpEyebrow: "Katkıda Bulun", helpH2: "Nasıl yardımcı olabilirsin?", helpP: "Üç basit yoldan biriyle bu ağın bir parçası olabilirsin.",
       help1Title: "Cihaz Bağışla", help1Desc: "Kullanmadığınız bilgisayar, tablet veya telefonu bağışlayın; onarıp bir öğrenciye ulaştıralım.", help1Btn: "Cihaz Bağışla",
       help2Title: "Taşıma Gönüllüsü Ol", help2Desc: "Bağışlanan cihazların toplama noktalarına ulaştırılmasına araç veya zamanınla destek ol.", help2Btn: "Gönüllü Ol",
@@ -524,7 +522,7 @@
       footerMeta: "Teknoloji ve eğitim arasında köprü kuran topluluk ağı", langAria: "Dil seçimi"
     },
     de: {
-      _title: "TechVerband — Technologie neues Leben schenken",
+      _title: "WeiterWert — Technologie neues Leben schenken",
       _desc: "Wir sammeln ungenutzte Computer, reparieren sie und bringen sie zu Schüler:innen, die sie brauchen. Wir reduzieren Elektroschrott und erweitern den Zugang zu Bildung.",
       navHow: "So funktioniert's", navApproach: "Unser Ansatz", navHelp: "Mitmachen", navCta: "Gerät spenden",
       heroEyebrow: "Gemeinschaftsbasierte Technologieinitiative",
@@ -544,7 +542,7 @@
       approach1Title: "Wir reduzieren Elektroschrott", approach1Desc: "Jedes Gerät, das sonst im Müll gelandet wäre, dient nach der Reparatur wieder einem Zweck.",
       approach2Title: "Wir erweitern den Zugang zu Bildung", approach2Desc: "Ein Computer bedeutet für eine Schülerin oder einen Schüler, am Unterricht teilnehmen und Hausaufgaben erledigen zu können.",
       approach3Title: "Wir bauen ein lokales Freiwilligennetzwerk auf", approach3Desc: "Wir bringen Spender:innen, Techniker:innen und Transport-Freiwillige rund um dasselbe Ziel zusammen.",
-      noteStrong: "Transparenzhinweis:", noteRest: " TechVerband ist eine neu gegründete Initiative. Wir bereiten unsere ersten Gerätelieferungen vor und werden jeden Schritt mit echten Zahlen auf dieser Seite teilen.",
+      noteStrong: "Transparenzhinweis:", noteRest: " WeiterWert ist eine neu gegründete Initiative. Wir bereiten unsere ersten Gerätelieferungen vor und werden jeden Schritt mit echten Zahlen auf dieser Seite teilen.",
       helpEyebrow: "Mitmachen", helpH2: "Wie kannst du helfen?", helpP: "Auf einem von drei einfachen Wegen kannst du Teil dieses Netzwerks werden.",
       help1Title: "Gerät spenden", help1Desc: "Spende deinen ungenutzten Computer, dein Tablet oder Telefon — wir reparieren es und bringen es zu einer Schülerin oder einem Schüler.", help1Btn: "Gerät spenden",
       help2Title: "Freiwillig transportieren", help2Desc: "Unterstütze uns dabei, gespendete Geräte zu unseren Sammelstellen zu bringen — mit Fahrzeug oder Zeit.", help2Btn: "Freiwillig helfen",
