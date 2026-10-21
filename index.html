@@ -252,60 +252,12 @@
     margin-bottom:8px;
   }
 
-  /* IMPACT — messbare Wirkung */
-  .impact-bg{
+  /* Hintergrund-Wechsel zwischen den Abschnitten */
+  .section-alt{
     background:var(--surface-alt);
     border-top:1px solid var(--line);
     border-bottom:1px solid var(--line);
   }
-  .stats-grid{
-    display:grid;grid-template-columns:1fr;gap:20px;margin-top:40px;
-  }
-  @media (min-width:480px){
-    .stats-grid{grid-template-columns:repeat(2,minmax(0,1fr));}
-  }
-  @media (min-width:960px){
-    .stats-grid{grid-template-columns:repeat(4,minmax(0,1fr));}
-  }
-  .stat{
-    background:var(--surface);
-    border:1px solid var(--line);
-    border-radius:var(--radius);
-    padding:26px 22px;
-    min-width:0;
-  }
-  .stat-value{
-    font-size:2.6rem;
-    font-weight:800;
-    line-height:1;
-    letter-spacing:-0.03em;
-    color:var(--brand-navy);
-    margin-bottom:10px;
-  }
-  .stat-value.pending{color:var(--muted);}
-  .stat-label{font-weight:700;margin-bottom:6px;font-size:0.98rem;hyphens:auto;overflow-wrap:break-word;}
-  .stat-hint{color:var(--muted);font-size:0.88rem;line-height:1.5;hyphens:auto;overflow-wrap:break-word;}
-  .stat-pending{
-    display:inline-block;
-    margin-top:14px;
-    font-size:0.7rem;font-weight:700;letter-spacing:0.06em;
-    text-transform:uppercase;
-    color:var(--muted);
-    border:1px dashed var(--line-strong);
-    border-radius:999px;
-    padding:4px 10px;
-  }
-  .impact-note{
-    margin-top:36px;
-    padding:20px 24px;
-    background:var(--surface);
-    border:1px solid var(--line);
-    border-left:4px solid var(--brand-sun);
-    border-radius:12px;
-    color:var(--muted);
-    font-size:0.95rem;
-  }
-  .impact-note strong{color:var(--ink);}
 
   /* PROCESS */
   .steps{
@@ -357,11 +309,6 @@
   .callout p{color:var(--muted);font-size:0.95rem;}
 
   /* TRUST — Geschichten, Rollen, Partner */
-  .trust-bg{
-    background:var(--surface-alt);
-    border-top:1px solid var(--line);
-    border-bottom:1px solid var(--line);
-  }
   .story-grid{
     display:grid;grid-template-columns:1fr;gap:20px;margin-top:40px;
   }
@@ -541,7 +488,7 @@
     </a>
     <nav class="nav-links" data-i18n-aria="navAria" aria-label="Hauptmenü">
       <a href="#so-funktionierts" data-i18n="navHow">So funktioniert's</a>
-      <a href="#wirkung" data-i18n="navImpact">Wirkung</a>
+      <a href="#vertrauen" data-i18n="footerTrust">Vertrauen</a>
       <a href="#mitmachen" data-i18n="navHelp">Mitmachen</a>
     </nav>
     <div class="nav-right">
@@ -621,7 +568,7 @@
   </section>
 
   <!-- VIER WEGE -->
-  <section id="mitmachen">
+  <section id="mitmachen" class="section-alt">
     <div class="container">
       <div class="section-head">
         <span class="eyebrow" data-i18n="pathsEyebrow">Mitmachen</span>
@@ -678,46 +625,6 @@
           <a href="mailto:helfen@weiterwert.de" class="btn btn-primary btn-block" data-i18n="path4Btn">Freiwillig helfen</a>
         </div>
       </div>
-    </div>
-  </section>
-
-  <!-- WIRKUNG / MESSBARE ZAHLEN -->
-  <section id="wirkung" class="impact-bg">
-    <div class="container">
-      <div class="section-head">
-        <span class="eyebrow" data-i18n="impactEyebrow">Wirkung</span>
-        <h2 data-i18n="impactH2">Jede Zahl zählt</h2>
-        <p data-i18n="impactP">Wir veröffentlichen unsere Zahlen nach jeder Gerätelieferung — nachprüfbar, nicht gerundet.</p>
-      </div>
-
-      <div class="stats-grid">
-        <div class="stat">
-          <div class="stat-value pending">—</div>
-          <div class="stat-label" data-i18n="stat1Label">Geräte gesammelt</div>
-          <div class="stat-hint" data-i18n="stat1Hint">Reparierte und versandbereite Geräte</div>
-          <span class="stat-pending" data-i18n="statPending">Live-Zahl folgt</span>
-        </div>
-        <div class="stat">
-          <div class="stat-value pending">—</div>
-          <div class="stat-label" data-i18n="stat2Label">Menschen erreicht</div>
-          <div class="stat-hint" data-i18n="stat2Hint">Schüler:innen und Lehrkräfte mit Gerät</div>
-          <span class="stat-pending" data-i18n="statPending">Live-Zahl folgt</span>
-        </div>
-        <div class="stat">
-          <div class="stat-value pending">—</div>
-          <div class="stat-label" data-i18n="stat3Label">Ehrenamtliche im Einsatz</div>
-          <div class="stat-hint" data-i18n="stat3Hint">Menschen, die regelmäßig Zeit einbringen</div>
-          <span class="stat-pending" data-i18n="statPending">Live-Zahl folgt</span>
-        </div>
-        <div class="stat">
-          <div class="stat-value pending">—</div>
-          <div class="stat-label" data-i18n="stat4Label">Elektroschrott vermieden</div>
-          <div class="stat-hint" data-i18n="stat4Hint">Geräte, die nicht im Müll gelandet sind</div>
-          <span class="stat-pending" data-i18n="statPending">Live-Zahl folgt</span>
-        </div>
-      </div>
-
-      <p class="impact-note"><strong data-i18n="impactNoteTitle">Wann erscheinen die Zahlen?</strong><span data-i18n="impactNote"> WeiterWert ist eine neu gegründete Initiative. Nach unserer ersten Gerätelieferung veröffentlichen wir hier die ersten echten Zahlen. Bis dahin steht bei jeder Kennzahl eine Null — nicht weil wir untätig sind, sondern weil wir nichts behaupten, was wir nicht belegen können.</span></p>
     </div>
   </section>
 
@@ -799,7 +706,7 @@
   </section>
 
   <!-- VERTRAUEN -->
-  <section id="vertrauen" class="trust-bg">
+  <section id="vertrauen" class="section-alt">
     <div class="container">
       <div class="section-head">
         <span class="eyebrow" data-i18n="trustEyebrow">Vertrauen</span>
@@ -843,7 +750,7 @@
         </article>
       </div>
 
-      <p class="impact-note"><strong data-i18n="storiesNoteTitle">Geschichten folgen.</strong><span data-i18n="storiesNote"> Wir veröffentlichen die ersten Geschichten nach unserer ersten Gerätelieferung. Wir schreiben lieber eine echte Geschichte als eine erfundene.</span></p>
+      <p class="note"><strong data-i18n="storiesNoteTitle">Geschichten folgen.</strong><span data-i18n="storiesNote"> Wir veröffentlichen die ersten Geschichten nach unserer ersten Gerätelieferung. Wir schreiben lieber eine echte Geschichte als eine erfundene.</span></p>
 
       <div class="info-grid">
         <div class="info-card">
@@ -913,7 +820,7 @@
           <div class="partner-slot">LOGO</div>
           <div class="partner-slot">LOGO</div>
         </div>
-        <p class="impact-note" style="margin-top:20px;"><span data-i18n="partnerNote">Platzhalter für Logos — wird mit den Marken unserer Unterstützer gefüllt.</span></p>
+        <p class="note" style="margin-top:20px;"><span data-i18n="partnerNote">Platzhalter für Logos — wird mit den Marken unserer Unterstützer gefüllt.</span></p>
       </div>
     </div>
   </section>
@@ -974,7 +881,6 @@
         <h4 data-i18n="footerNavigate">Navigation</h4>
         <div class="footer-links">
           <a href="#so-funktionierts" data-i18n="navHow">So funktioniert's</a>
-          <a href="#wirkung" data-i18n="navImpact">Wirkung</a>
           <a href="#vertrauen" data-i18n="footerTrust">Vertrauen</a>
           <a href="#mitmachen" data-i18n="navHelp">Mitmachen</a>
         </div>
@@ -1002,7 +908,7 @@
     tr: {
       _title: "WeiterWert — Teknolojiye Yeniden Hayat Veriyoruz",
       _desc: "Kullanılmayan bilgisayarları topluyor, onarıyor ve ihtiyacı olan öğrencilere ulaştırıyoruz. Elektronik atığı azaltırken eğitime erişimi büyütüyoruz.",
-      navHow: "Nasıl Çalışır", navImpact: "Etki", navHelp: "Yardım Et", navCta: "Cihaz Bağışla",
+      navHow: "Nasıl Çalışır", navHelp: "Yardım Et", navCta: "Cihaz Bağışla",
       heroEyebrow: "Topluluk Odaklı Teknoloji Girişimi",
       heroH1: "Teknolojiye yeniden hayat veriyoruz, eğitimi herkese ulaştırıyoruz.",
       heroLead: "Kullanılmayan bilgisayarları, tabletleri ve telefonları topluyor, onarıyor ve ihtiyacı olan öğrenci ile eğitimcilere ulaştırıyoruz. Bir cihazın çöpe gitmesini değil, bir öğrencinin önünün açılmasını sağlıyoruz.",
@@ -1026,17 +932,6 @@
       path4Label: "Aktif olmak için", path4Title: "Gönüllü Olarak Taşı",
       path4Desc: "Bağışlanan cihazları toplama noktalarından okullara taşımak için aracın ya da zamanınla destek ol.",
       path4Btn: "Gönüllü Ol",
-
-      impactEyebrow: "Etki",
-      impactH2: "Her sayı önemlidir",
-      impactP: "Rakamlarımızı her cihaz teslimatından sonra yayınlıyoruz — yuvarlanmadan, doğrulanabilir biçimde.",
-      stat1Label: "Toplanan cihaz", stat1Hint: "Onarımı tamamlanan ve dağıtıma hazır cihazlar",
-      stat2Label: "Ulaşılan kişi", stat2Hint: "Cihazı teslim aldığı öğrenci ve öğretmenler",
-      stat3Label: "Gönüllü sayısı", stat3Hint: "Düzenli olarak katkı sunan gönüllüler",
-      stat4Label: "Önlenen elektronik atık", stat4Hint: "Atığa gitmek yerine yeniden kullanıma kazandırılan cihazlar",
-      statPending: "Canlı sayı geliyor",
-      impactNoteTitle: "Sayılar ne zaman yayınlanacak?",
-      impactNote: " WeiterWert yeni kurulan bir girişim. İlk cihaz teslimatlarımızdan sonra ilk gerçek rakamları burada yayınlayacağız. O güne kadar gösterge değerleri açık kalıyor — çalışmadığımız için değil, belgeleyemediğimiz hiçbir şeyi iddia etmediğimiz için.",
 
       howEyebrow: "Süreç", howH2: "Nasıl çalışıyoruz?",
       howP: "Bağıştan teslimata kadar her cihaz aynı beş adımdan geçer.",
@@ -1093,7 +988,7 @@
     de: {
       _title: "WeiterWert — Technologie neues Leben schenken",
       _desc: "Wir sammeln ungenutzte Computer, reparieren sie und bringen sie zu Schüler:innen, die sie brauchen. Wir reduzieren Elektroschrott und erweitern den Zugang zu Bildung.",
-      navHow: "So funktioniert's", navImpact: "Wirkung", navHelp: "Mitmachen", navCta: "Gerät spenden",
+      navHow: "So funktioniert's", navHelp: "Mitmachen", navCta: "Gerät spenden",
       heroEyebrow: "Gemeinschaftsbasierte Technologieinitiative",
       heroH1: "Wir schenken Technologie neues Leben und bringen Bildung zu allen.",
       heroLead: "Wir sammeln ungenutzte Computer, Tablets und Telefone, reparieren sie und bringen sie zu Schüler:innen und Lehrkräften, die sie brauchen. Kein Gerät soll im Müll landen — stattdessen soll es einer Person neue Möglichkeiten eröffnen.",
@@ -1117,17 +1012,6 @@
       path4Label: "Für Aktive", path4Title: "Freiwillig transportieren",
       path4Desc: "Unterstütze uns dabei, gespendete Geräte zu unseren Sammelstellen und weiter zu den Schulen zu bringen — mit Fahrzeug oder Zeit.",
       path4Btn: "Freiwillig helfen",
-
-      impactEyebrow: "Wirkung",
-      impactH2: "Jede Zahl zählt",
-      impactP: "Wir veröffentlichen unsere Zahlen nach jeder Gerätelieferung — nachprüfbar, nicht gerundet.",
-      stat1Label: "Geräte gesammelt", stat1Hint: "Reparierte und versandbereite Geräte",
-      stat2Label: "Menschen erreicht", stat2Hint: "Schüler:innen und Lehrkräfte mit Gerät",
-      stat3Label: "Ehrenamtliche im Einsatz", stat3Hint: "Menschen, die regelmäßig Zeit einbringen",
-      stat4Label: "Elektroschrott vermieden", stat4Hint: "Geräte, die nicht im Müll gelandet sind",
-      statPending: "Live-Zahl folgt",
-      impactNoteTitle: "Wann erscheinen die Zahlen?",
-      impactNote: " WeiterWert ist eine neu gegründete Initiative. Nach unserer ersten Gerätelieferung veröffentlichen wir hier die ersten echten Zahlen. Bis dahin bleiben die Kennzahlen offen — nicht weil wir untätig sind, sondern weil wir nichts behaupten, was wir nicht belegen können.",
 
       howEyebrow: "Prozess", howH2: "Wie funktioniert es?",
       howP: "Vom Spenden bis zur Übergabe durchläuft jedes Gerät dieselben fünf Schritte.",
