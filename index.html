@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>WeiterWert — Technologie neues Leben schenken</title>
 <meta name="description" content="Wir sammeln ungenutzte Computer, reparieren sie und bringen sie zu Schüler:innen, die sie brauchen. Wir reduzieren Elektroschrott und erweitern den Zugang zu Bildung.">
-<meta name="theme-color" content="#F8F4EC">
+<meta name="theme-color" content="#F4F7F8">
 <link rel="icon" type="image/png" href="assets/favicon.png">
 <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
 <meta property="og:image" content="assets/logo-full.jpg">
@@ -14,21 +14,42 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
   :root{
-    --cream:#F8F4EC;
-    --clay:#EFE6D7;
-    --clay-line:#E1D5C0;
-    --ink:#2E2A22;
-    --muted:#6F6856;
-    --accent:#1E7D68;
-    --accent-dark:#155A4B;
-    --white:#FFFFFF;
-    --focus:#0B4A3E;
+    /* Markenfarben — direkt aus assets/logo-full.jpg entnommen */
+    --brand-navy:#064E67;   /* Schriftzug "Weiter", Laptop-Rahmen */
+    --brand-green:#1E7451;  /* Kreispfeile, Laptop-Gehäuse */
+    --brand-lime:#52973C;   /* Schriftzug "Wert", Blätter */
+    --brand-blue:#238EB2;   /* Figur */
+    --brand-sun:#FBC131;    /* Strahlen */
+
+    /* Flächen */
+    --bg:#F4F7F8;
+    --bg-glass:rgba(244,247,248,0.92);
+    --surface:#FFFFFF;
+    --surface-alt:#E8EFF1;
+    --line:#D3DEE2;
+    --line-strong:#C2D0D6;
+
+    /* Text */
+    --ink:#16242C;
+    --muted:#55666F;
+
+    /* Akzent */
+    --accent:#064E67;
+    --accent-dark:#04394A;
+    --on-accent:#FFFFFF;
+    --focus:#0A5F7A;
+
+    /* Maße */
+    --radius:18px;
+    --radius-lg:28px;
+    --shadow:0 1px 2px rgba(22,36,44,.04),0 8px 24px rgba(22,36,44,.06);
+    --shadow-lift:0 2px 4px rgba(22,36,44,.06),0 18px 40px rgba(22,36,44,.10);
   }
   *{box-sizing:border-box;margin:0;padding:0;}
   html{scroll-behavior:smooth;}
   body{
     font-family:'Inter',system-ui,-apple-system,'Segoe UI',sans-serif;
-    background:var(--cream);
+    background:var(--bg);
     color:var(--ink);
     line-height:1.6;
     -webkit-font-smoothing:antialiased;
@@ -47,7 +68,7 @@
     color:var(--accent);
     margin-bottom:14px;
   }
-  a:focus-visible,button:focus-visible{
+  a:focus-visible,button:focus-visible,select:focus-visible{
     outline:3px solid var(--focus);
     outline-offset:2px;
   }
@@ -55,9 +76,9 @@
   /* NAV */
   header.nav{
     position:sticky;top:0;z-index:20;
-    background:rgba(248,244,236,0.92);
+    background:var(--bg-glass);
     backdrop-filter:saturate(180%) blur(10px);
-    border-bottom:1px solid var(--clay-line);
+    border-bottom:1px solid var(--line);
   }
   .nav-inner{
     max-width:1120px;margin:0 auto;padding:10px 24px;
@@ -67,9 +88,10 @@
   .brand{
     display:flex;align-items:center;gap:10px;
     font-weight:800;font-size:1.25rem;
-    text-decoration:none;color:var(--ink);
+    text-decoration:none;color:var(--brand-navy);
     white-space:nowrap;
   }
+  .brand-name-accent{color:var(--brand-lime);}
   .brand-mark{
     width:56px;height:56px;
     object-fit:contain;
@@ -84,24 +106,40 @@
   }
   .nav-links a{text-decoration:none;}
   .nav-links a:hover{color:var(--ink);}
+  .nav-right{display:flex;align-items:center;gap:12px;}
+  /* Der Spenden-CTA im Header erscheint erst ab Desktop. Mobil steht er
+     direkt darunter im Hero und nochmal im Abschnitt "Mitmachen". */
+  .nav-right .btn{display:none;}
   @media (min-width:840px){
     .nav-links{display:flex;}
+    .nav-right .btn{display:inline-flex;}
   }
-  .nav-right{display:flex;align-items:center;gap:12px;}
 
   .lang-switch{
-    display:flex;border:1px solid var(--clay-line);
-    border-radius:999px;padding:3px;background:var(--white);
+    display:flex;
     flex-shrink:0;
   }
-  .lang-btn{
-    border:none;background:transparent;
-    padding:6px 12px;border-radius:999px;
-    font-family:inherit;font-weight:700;font-size:0.8rem;
-    color:var(--muted);cursor:pointer;
-    min-width:38px;min-height:32px;
+  .lang-select{
+    appearance:none;
+    -webkit-appearance:none;
+    -moz-appearance:none;
+    background-color:var(--surface);
+    background-image:
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 6' fill='none' stroke='%2355666F' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M1 1l4 4 4-4'/%3E%3C/svg%3E");
+    background-repeat:no-repeat;
+    background-position:right 11px center;
+    background-size:9px 6px;
+    border:1px solid var(--line);
+    border-radius:999px;
+    padding:7px 28px 7px 14px;
+    font-family:inherit;
+    font-weight:700;
+    font-size:0.8rem;
+    color:var(--ink);
+    cursor:pointer;
+    min-height:36px;
   }
-  .lang-btn[aria-pressed="true"]{background:var(--accent);color:var(--white);}
+  .lang-select:hover{border-color:var(--muted);}
 
   /* BUTTONS */
   .btn{
@@ -115,11 +153,13 @@
     border:1px solid transparent;
     cursor:pointer;
   }
-  .btn-primary{background:var(--accent);color:var(--white);}
+  .btn-primary{background:var(--accent);color:var(--on-accent);}
   .btn-primary:hover{background:var(--accent-dark);}
-  .btn-ghost{background:transparent;color:var(--ink);border-color:var(--clay-line);}
-  .btn-ghost:hover{background:var(--clay);}
+  .btn-ghost{background:transparent;color:var(--ink);border-color:var(--line);}
+  .btn-ghost:hover{background:var(--surface-alt);}
   .btn-sm{padding:10px 18px;font-size:0.9rem;min-height:40px;}
+  .btn-lg{padding:17px 34px;font-size:1.05rem;min-height:56px;}
+  .btn-block{width:100%;}
 
   /* HERO */
   .hero{padding:72px 0 40px;}
@@ -138,45 +178,302 @@
   }
 
   .hero-art{
-    background:var(--clay);
-    border:1px solid var(--clay-line);
-    border-radius:28px;
+    position:relative;
+    background:var(--surface-alt);
+    border:1px solid var(--line);
+    border-radius:var(--radius-lg);
     padding:32px 16px;
+    overflow:hidden;
+  }
+  .hero-art::before{
+    content:"";
+    position:absolute;top:0;left:0;right:0;height:5px;
+    background:linear-gradient(90deg,
+      var(--brand-navy) 0%,
+      var(--brand-green) 33%,
+      var(--brand-blue) 66%,
+      var(--brand-sun) 100%);
   }
   .hero-art figcaption{
     text-align:center;color:var(--muted);font-size:0.85rem;margin-top:10px;
   }
 
-  /* HOW IT WORKS */
+  /* SVG-Illustration */
+  .art-stroke{stroke:var(--ink);}
+  .art-accent{stroke:var(--accent);}
+  .art-green{stroke:var(--brand-green);}
+  .art-label{fill:var(--muted);stroke:none;}
+
+  /* SECTION-HEAD */
+  .section-head{max-width:660px;margin-bottom:8px;}
+  .section-head h2{font-size:2rem;margin-bottom:14px;}
+  .section-head p{color:var(--muted);font-size:1.05rem;}
+  .section-head.center{margin-left:auto;margin-right:auto;text-align:center;}
+
+  /* PATHS — vier getrennte Wege */
+  .paths-grid{
+    display:grid;grid-template-columns:1fr;gap:20px;margin-top:40px;
+  }
+  @media (min-width:620px){
+    .paths-grid{grid-template-columns:repeat(2,1fr);}
+  }
+  @media (min-width:1020px){
+    .paths-grid{grid-template-columns:repeat(4,1fr);}
+  }
+  .path-card{
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+    padding:28px 24px;
+    display:flex;flex-direction:column;
+    box-shadow:var(--shadow);
+    transition:transform .18s ease,box-shadow .18s ease,border-color .18s ease;
+  }
+  .path-card:hover{
+    transform:translateY(-3px);
+    box-shadow:var(--shadow-lift);
+    border-color:var(--line-strong);
+  }
+  .path-card .icon{
+    width:52px;height:52px;border-radius:14px;
+    display:flex;align-items:center;justify-content:center;
+    margin-bottom:18px;
+  }
+  .path-card .icon svg{width:26px;height:26px;}
+  .path-card:nth-child(1) .icon{background:rgba(30,116,81,.10);color:var(--brand-green);}
+  .path-card:nth-child(2) .icon{background:rgba(35,142,178,.12);color:var(--brand-blue);}
+  .path-card:nth-child(3) .icon{background:rgba(6,78,103,.10);color:var(--brand-navy);}
+  .path-card:nth-child(4) .icon{background:rgba(251,193,49,.18);color:#9A6D08;}
+  .path-card h3{font-size:1.12rem;margin-bottom:10px;}
+  .path-card p{color:var(--muted);font-size:0.95rem;margin-bottom:24px;flex-grow:1;}
+  .path-card .path-label{
+    font-size:0.72rem;font-weight:700;letter-spacing:0.08em;
+    text-transform:uppercase;color:var(--muted);
+    margin-bottom:8px;
+  }
+
+  /* IMPACT — messbare Wirkung */
+  .impact-bg{
+    background:var(--surface-alt);
+    border-top:1px solid var(--line);
+    border-bottom:1px solid var(--line);
+  }
+  .stats-grid{
+    display:grid;grid-template-columns:1fr;gap:20px;margin-top:40px;
+  }
+  @media (min-width:480px){
+    .stats-grid{grid-template-columns:repeat(2,minmax(0,1fr));}
+  }
+  @media (min-width:960px){
+    .stats-grid{grid-template-columns:repeat(4,minmax(0,1fr));}
+  }
+  .stat{
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+    padding:26px 22px;
+    min-width:0;
+  }
+  .stat-value{
+    font-size:2.6rem;
+    font-weight:800;
+    line-height:1;
+    letter-spacing:-0.03em;
+    color:var(--brand-navy);
+    margin-bottom:10px;
+  }
+  .stat-value.pending{color:var(--muted);}
+  .stat-label{font-weight:700;margin-bottom:6px;font-size:0.98rem;hyphens:auto;overflow-wrap:break-word;}
+  .stat-hint{color:var(--muted);font-size:0.88rem;line-height:1.5;hyphens:auto;overflow-wrap:break-word;}
+  .stat-pending{
+    display:inline-block;
+    margin-top:14px;
+    font-size:0.7rem;font-weight:700;letter-spacing:0.06em;
+    text-transform:uppercase;
+    color:var(--muted);
+    border:1px dashed var(--line-strong);
+    border-radius:999px;
+    padding:4px 10px;
+  }
+  .impact-note{
+    margin-top:36px;
+    padding:20px 24px;
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-left:4px solid var(--brand-sun);
+    border-radius:12px;
+    color:var(--muted);
+    font-size:0.95rem;
+  }
+  .impact-note strong{color:var(--ink);}
+
+  /* PROCESS */
   .steps{
     display:grid;grid-template-columns:1fr;gap:20px;margin-top:40px;
   }
-  @media (min-width:760px){
-    .steps{grid-template-columns:repeat(4,1fr);}
+  @media (min-width:620px){
+    .steps{grid-template-columns:repeat(2,1fr);}
+  }
+  @media (min-width:1000px){
+    .steps{grid-template-columns:repeat(5,1fr);}
   }
   .step{
-    background:var(--white);
-    border:1px solid var(--clay-line);
-    border-radius:18px;
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:var(--radius);
     padding:28px 22px;
     position:relative;
   }
   .step-num{
     width:34px;height:34px;border-radius:50%;
-    background:var(--accent);color:var(--white);
+    background:var(--brand-green);color:var(--on-accent);
     display:flex;align-items:center;justify-content:center;
     font-weight:700;font-size:0.95rem;margin-bottom:18px;
   }
-  .step .icon{margin-bottom:16px;color:var(--accent);}
+  .step .icon{margin-bottom:16px;color:var(--brand-blue);}
   .step h3{font-size:1.08rem;margin-bottom:8px;}
   .step p{color:var(--muted);font-size:0.94rem;}
 
-  .section-head{max-width:640px;margin-bottom:8px;}
-  .section-head h2{font-size:2rem;margin-bottom:14px;}
-  .section-head p{color:var(--muted);font-size:1.05rem;}
+  /* CALL-OUT für Unternehmen */
+  .callout{
+    margin-top:36px;
+    display:flex;align-items:center;gap:28px;flex-wrap:wrap;
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:var(--radius-lg);
+    padding:30px 34px;
+    box-shadow:var(--shadow);
+  }
+  .callout .icon{
+    width:58px;height:58px;flex-shrink:0;
+    border-radius:16px;
+    display:flex;align-items:center;justify-content:center;
+    background:rgba(6,78,103,.10);
+    color:var(--brand-navy);
+  }
+  .callout .icon svg{width:28px;height:28px;}
+  .callout-body{flex:1;min-width:260px;}
+  .callout h3{font-size:1.15rem;margin-bottom:6px;}
+  .callout p{color:var(--muted);font-size:0.95rem;}
 
-  /* WHY / APPROACH */
-  .approach-bg{background:var(--clay);}
+  /* TRUST — Geschichten, Rollen, Partner */
+  .trust-bg{
+    background:var(--surface-alt);
+    border-top:1px solid var(--line);
+    border-bottom:1px solid var(--line);
+  }
+  .story-grid{
+    display:grid;grid-template-columns:1fr;gap:20px;margin-top:40px;
+  }
+  @media (min-width:700px){
+    .story-grid{grid-template-columns:repeat(3,1fr);}
+  }
+  .story-card{
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+    overflow:hidden;
+    display:flex;flex-direction:column;
+    box-shadow:var(--shadow);
+  }
+  .story-card h3{font-size:1.05rem;margin:22px 22px 8px;}
+  .story-card p{color:var(--muted);font-size:0.93rem;padding:0 22px 22px;flex-grow:1;}
+
+  /* Medien-Platzhalter: <img> einsetzen, .media-icon entfernen */
+  .media{
+    position:relative;
+    aspect-ratio:16/10;
+    background:linear-gradient(135deg,var(--brand-navy),var(--brand-green));
+    display:flex;align-items:center;justify-content:center;
+    overflow:hidden;
+  }
+  .story-card:nth-child(2) .media{background:linear-gradient(135deg,var(--brand-blue),var(--brand-navy));}
+  .story-card:nth-child(3) .media{background:linear-gradient(135deg,var(--brand-green),var(--brand-lime));}
+  .media img{
+    position:absolute;inset:0;
+    width:100%;height:100%;object-fit:cover;
+  }
+  .media-icon{color:rgba(255,255,255,.5);}
+  .media-tag{
+    position:absolute;left:14px;bottom:14px;
+    background:rgba(22,36,44,.55);
+    color:#fff;
+    font-size:0.68rem;font-weight:700;letter-spacing:0.08em;
+    text-transform:uppercase;
+    padding:5px 10px;border-radius:999px;
+    backdrop-filter:blur(4px);
+  }
+
+  .roles-grid{
+    display:grid;grid-template-columns:1fr;gap:20px;margin-top:32px;
+  }
+  @media (min-width:700px){
+    .roles-grid{grid-template-columns:repeat(3,1fr);}
+  }
+  .role-card{
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+    padding:26px 24px;
+    display:flex;gap:16px;align-items:flex-start;
+  }
+  .avatar{
+    width:52px;height:52px;flex-shrink:0;
+    border-radius:50%;
+    display:flex;align-items:center;justify-content:center;
+    background:linear-gradient(135deg,var(--brand-navy),var(--brand-blue));
+    color:rgba(255,255,255,.85);
+  }
+  .role-card:nth-child(2) .avatar{background:linear-gradient(135deg,var(--brand-green),var(--brand-lime));}
+  .role-card:nth-child(3) .avatar{background:linear-gradient(135deg,var(--brand-blue),var(--brand-navy));}
+  .role-card h3{font-size:1rem;margin-bottom:4px;}
+  .role-card p{color:var(--muted);font-size:0.9rem;}
+
+  .partner-row{
+    display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin-top:28px;
+  }
+  @media (min-width:760px){
+    .partner-row{grid-template-columns:repeat(4,1fr);}
+  }
+  .partner-slot{
+    height:88px;
+    background:var(--surface);
+    border:1px dashed var(--line-strong);
+    border-radius:14px;
+    display:flex;align-items:center;justify-content:center;
+    color:var(--muted);
+    font-size:0.78rem;font-weight:700;letter-spacing:0.14em;
+  }
+
+  .info-grid{
+    display:grid;grid-template-columns:1fr;gap:20px;margin-top:40px;
+  }
+  @media (min-width:760px){
+    .info-grid{grid-template-columns:repeat(2,1fr);}
+  }
+  .info-card{
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+    padding:28px 24px;
+  }
+  .info-card .icon{color:var(--brand-navy);margin-bottom:16px;}
+  .info-card h3{font-size:1.08rem;margin-bottom:8px;}
+  .info-card p{color:var(--muted);font-size:0.94rem;}
+
+  .note{
+    margin-top:36px;
+    padding:20px 24px;
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-left:4px solid var(--brand-sun);
+    border-radius:12px;
+    color:var(--muted);
+    font-size:0.95rem;
+  }
+  .note strong{color:var(--ink);}
+
+  /* APPROACH */
   .approach-grid{
     display:grid;grid-template-columns:1fr;gap:20px;margin-top:40px;
   }
@@ -184,65 +481,53 @@
     .approach-grid{grid-template-columns:repeat(3,1fr);}
   }
   .approach-card{
-    background:var(--white);
-    border-radius:18px;
+    background:var(--surface);
+    border-radius:var(--radius);
     padding:28px 22px;
-    border:1px solid var(--clay-line);
+    border:1px solid var(--line);
   }
-  .approach-card .icon{color:var(--accent);margin-bottom:16px;}
+  .approach-card .icon{color:var(--brand-green);margin-bottom:16px;}
   .approach-card h3{font-size:1.08rem;margin-bottom:8px;}
   .approach-card p{color:var(--muted);font-size:0.94rem;}
 
-  .note{
-    margin-top:36px;
-    padding:20px 24px;
-    background:var(--white);
-    border:1px solid var(--clay-line);
-    border-left:4px solid var(--accent);
-    border-radius:12px;
-    color:var(--muted);
-    font-size:0.95rem;
-  }
-  .note strong{color:var(--ink);}
-
-  /* CTA / HELP */
-  .help-grid{
-    display:grid;grid-template-columns:1fr;gap:20px;margin-top:40px;
-  }
-  @media (min-width:760px){
-    .help-grid{grid-template-columns:repeat(3,1fr);}
-  }
-  .help-card{
-    background:var(--white);
-    border:1px solid var(--clay-line);
-    border-radius:20px;
-    padding:30px 24px;
-    display:flex;flex-direction:column;
-  }
-  .help-card .icon{color:var(--accent);margin-bottom:18px;}
-  .help-card h3{font-size:1.15rem;margin-bottom:10px;}
-  .help-card p{color:var(--muted);font-size:0.95rem;margin-bottom:24px;flex-grow:1;}
-
   /* FOOTER */
   footer{
-    border-top:1px solid var(--clay-line);
-    padding:48px 0 32px;
+    border-top:1px solid var(--line);
+    padding:56px 0 32px;
   }
   .footer-inner{
-    display:flex;flex-direction:column;gap:18px;
-    align-items:center;text-align:center;
+    display:flex;flex-direction:column;gap:28px;
   }
-  @media (min-width:640px){
-    .footer-inner{flex-direction:row;justify-content:space-between;text-align:left;}
+  @media (min-width:760px){
+    .footer-inner{
+      display:grid;
+      grid-template-columns:1.6fr 1fr 1fr;
+      gap:40px;
+    }
   }
-  .footer-brand{font-weight:700;}
-  .footer-meta{color:var(--muted);font-size:0.88rem;}
-  .footer-links{display:flex;gap:20px;font-size:0.9rem;color:var(--muted);}
+  .footer-brand{font-weight:800;font-size:1.1rem;color:var(--brand-navy);margin-bottom:8px;}
+  .footer-meta{color:var(--muted);font-size:0.88rem;max-width:340px;}
+  .footer-col h4{
+    font-size:0.78rem;font-weight:700;letter-spacing:0.08em;
+    text-transform:uppercase;color:var(--muted);
+    margin-bottom:12px;
+  }
+  .footer-links{display:flex;flex-direction:column;gap:10px;font-size:0.9rem;color:var(--muted);}
   .footer-links a{text-decoration:none;}
   .footer-links a:hover{color:var(--ink);}
+  .footer-bottom{
+    margin-top:32px;padding-top:20px;
+    border-top:1px solid var(--line);
+    display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;
+    color:var(--muted);font-size:0.82rem;
+  }
 
   @media (prefers-reduced-motion:no-preference){
-    .btn,.lang-btn{transition:background 0.15s ease;}
+    .btn,.lang-select{transition:background 0.15s ease,border-color 0.15s ease;}
+    .path-card{transition:transform 0.18s ease,box-shadow 0.18s ease,border-color 0.18s ease;}
+  }
+  @media (prefers-reduced-motion:reduce){
+    html{scroll-behavior:auto;}
   }
 </style>
 </head>
@@ -252,17 +537,19 @@
   <div class="nav-inner">
     <a class="brand" href="#top">
       <img class="brand-mark" src="assets/logo-mark.png" alt="" width="56" height="56">
-      WeiterWert
+      <span>Weiter<span class="brand-name-accent">Wert</span></span>
     </a>
     <nav class="nav-links" data-i18n-aria="navAria" aria-label="Hauptmenü">
       <a href="#so-funktionierts" data-i18n="navHow">So funktioniert's</a>
-      <a href="#unser-ansatz" data-i18n="navApproach">Unser Ansatz</a>
+      <a href="#wirkung" data-i18n="navImpact">Wirkung</a>
       <a href="#mitmachen" data-i18n="navHelp">Mitmachen</a>
     </nav>
     <div class="nav-right">
-      <div class="lang-switch" role="group" data-i18n-aria="langAria" aria-label="Sprachauswahl">
-        <button class="lang-btn" data-lang="de" aria-pressed="true">DE</button>
-        <button class="lang-btn" data-lang="tr" aria-pressed="false">TR</button>
+      <div class="lang-switch">
+        <select class="lang-select" data-i18n-aria="langAria" aria-label="Sprachauswahl">
+          <option value="de" title="Deutsch">DE</option>
+          <option value="tr" title="Türkçe">TR</option>
+        </select>
       </div>
       <a href="#mitmachen" class="btn btn-primary btn-sm" data-i18n="navCta">Gerät spenden</a>
     </div>
@@ -278,8 +565,8 @@
       <h1 data-i18n="heroH1">Wir schenken Technologie neues Leben und bringen Bildung zu allen.</h1>
       <p class="lead" data-i18n="heroLead">Wir sammeln ungenutzte Computer, Tablets und Telefone, reparieren sie und bringen sie zu Schüler:innen und Lehrkräften, die sie brauchen. Kein Gerät soll im Müll landen — stattdessen soll es einer Person neue Möglichkeiten eröffnen.</p>
       <div class="hero-actions">
-        <a href="#mitmachen" class="btn btn-primary" data-i18n="heroCtaPrimary">Gerät spenden</a>
-        <a href="#so-funktionierts" class="btn btn-ghost" data-i18n="heroCtaSecondary">So funktioniert's</a>
+        <a href="#mitmachen" class="btn btn-primary btn-lg" data-i18n="heroCtaPrimary">Laptop spenden</a>
+        <a href="#mitmachen" class="btn btn-ghost btn-lg" data-i18n="heroCtaSecondary">Gerät beantragen</a>
       </div>
     </div>
 
@@ -287,45 +574,45 @@
       <figure class="hero-art">
         <svg viewBox="0 0 760 260" role="img" aria-labelledby="heroArtTitle" xmlns="http://www.w3.org/2000/svg">
           <title id="heroArtTitle" data-i18n="heroArtTitle">Illustration des Weges eines gespendeten Laptops: Sammlung, Reparatur und Übergabe an eine Schülerin oder einen Schüler</title>
-          <g fill="none" stroke="#2E2A22" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+          <g class="art-stroke" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
             <!-- box: collect -->
             <path d="M60 150 L60 210 L150 210 L150 150 Z"/>
             <path d="M60 150 L105 125 L150 150"/>
             <path d="M105 125 L105 210" stroke-dasharray="4 5"/>
-            <text x="70" y="240" font-family="Inter, sans-serif" font-size="13" fill="#6F6856" stroke="none" data-i18n="svgLabel1">Sammeln</text>
+            <text class="art-label" x="70" y="240" font-family="Inter, sans-serif" font-size="13" data-i18n="svgLabel1">Sammeln</text>
 
             <!-- arrow -->
-            <path d="M175 175 L235 175" stroke="#1E7D68"/>
-            <path d="M225 167 L235 175 L225 183" stroke="#1E7D68"/>
+            <path class="art-accent" d="M175 175 L235 175"/>
+            <path class="art-accent" d="M225 167 L235 175 L225 183"/>
 
             <!-- laptop with wrench: repair -->
             <path d="M280 190 L280 140 L360 140 L360 190 Z"/>
             <path d="M270 190 L370 190 L365 202 L275 202 Z"/>
-            <g transform="translate(330,120) rotate(45)">
-              <rect x="-4" y="-22" width="8" height="26" rx="3" stroke="#1E7D68"/>
-              <circle cx="0" cy="4" r="9" stroke="#1E7D68"/>
+            <g class="art-green" transform="translate(330,120) rotate(45)">
+              <rect x="-4" y="-22" width="8" height="26" rx="3"/>
+              <circle cx="0" cy="4" r="9"/>
             </g>
-            <text x="285" y="222" font-family="Inter, sans-serif" font-size="13" fill="#6F6856" stroke="none" data-i18n="svgLabel2">Reparieren</text>
+            <text class="art-label" x="285" y="222" font-family="Inter, sans-serif" font-size="13" data-i18n="svgLabel2">Reparieren</text>
 
             <!-- arrow -->
-            <path d="M395 175 L455 175" stroke="#1E7D68"/>
-            <path d="M445 167 L455 175 L445 183" stroke="#1E7D68"/>
+            <path class="art-accent" d="M395 175 L455 175"/>
+            <path class="art-accent" d="M445 167 L455 175 L445 183"/>
 
             <!-- laptop with gear: install software -->
             <path d="M500 190 L500 140 L580 140 L580 190 Z"/>
             <path d="M490 190 L590 190 L585 202 L495 202 Z"/>
-            <circle cx="540" cy="163" r="14" stroke="#1E7D68"/>
-            <circle cx="540" cy="163" r="4" stroke="#1E7D68"/>
-            <text x="497" y="222" font-family="Inter, sans-serif" font-size="13" fill="#6F6856" stroke="none" data-i18n="svgLabel3">Software</text>
+            <circle class="art-green" cx="540" cy="163" r="14"/>
+            <circle class="art-green" cx="540" cy="163" r="4"/>
+            <text class="art-label" x="497" y="222" font-family="Inter, sans-serif" font-size="13" data-i18n="svgLabel3">Software</text>
 
             <!-- arrow -->
-            <path d="M615 175 L660 175" stroke="#1E7D68"/>
-            <path d="M650 167 L660 175 L650 183" stroke="#1E7D68"/>
+            <path class="art-accent" d="M615 175 L660 175"/>
+            <path class="art-accent" d="M650 167 L660 175 L650 183"/>
 
             <!-- hand receiving device: deliver -->
             <path d="M672 195 C672 160 700 150 700 150 L700 130 L706 130 L706 150 C706 150 730 158 730 195 Z"/>
             <circle cx="700" cy="118" r="7"/>
-            <text x="662" y="222" font-family="Inter, sans-serif" font-size="13" fill="#6F6856" stroke="none" data-i18n="svgLabel4">Ausliefern</text>
+            <text class="art-label" x="662" y="222" font-family="Inter, sans-serif" font-size="13" data-i18n="svgLabel4">Ausliefern</text>
           </g>
         </svg>
         <figcaption data-i18n="heroFigcaption">Der Weg eines Geräts: sammeln → reparieren → Software installieren → ausliefern</figcaption>
@@ -333,13 +620,114 @@
     </div>
   </section>
 
-  <!-- HOW IT WORKS -->
+  <!-- VIER WEGE -->
+  <section id="mitmachen">
+    <div class="container">
+      <div class="section-head">
+        <span class="eyebrow" data-i18n="pathsEyebrow">Mitmachen</span>
+        <h2 data-i18n="pathsH2">Vier Wege, Teil des Netzwerks zu werden</h2>
+        <p data-i18n="pathsP">Ob Gerät, Anfrage, Unternehmen oder Zeit — jeder Weg zählt.</p>
+      </div>
+
+      <div class="paths-grid">
+        <div class="path-card">
+          <div class="icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="4" y="4" width="16" height="12" rx="1.5"/><path d="M2 20h20"/><path d="M12 8v4"/>
+            </svg>
+          </div>
+          <span class="path-label" data-i18n="path1Label">Für Privatpersonen</span>
+          <h3 data-i18n="path1Title">Gerät spenden</h3>
+          <p data-i18n="path1Desc">Spende deinen ungenutzten Computer, dein Tablet oder Telefon — wir reparieren es und bringen es zu einer Schülerin oder einem Schüler.</p>
+          <a href="mailto:spende@weiterwert.de" class="btn btn-primary btn-block" data-i18n="path1Btn">Gerät spenden</a>
+        </div>
+
+        <div class="path-card">
+          <div class="icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M9 18h6M10 21h4M12 3a6 6 0 00-3.6 10.8c.6.45 1 .95 1.1 1.7h5a2 2 0 011.1-1.7A6 6 0 0012 3z"/>
+            </svg>
+          </div>
+          <span class="path-label" data-i18n="path2Label">Für Schulen & Familien</span>
+          <h3 data-i18n="path2Title">Gerät beantragen</h3>
+          <p data-i18n="path2Desc">Kennst du eine Schule, eine Schülerin, einen Schüler oder eine Gemeinschaft mit Bedarf? Schlag uns dein Projekt vor — wir suchen das passende Gerät.</p>
+          <a href="mailto:projekt@weiterwert.de" class="btn btn-primary btn-block" data-i18n="path2Btn">Gerät beantragen</a>
+        </div>
+
+        <div class="path-card">
+          <div class="icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M3 21h18M5 21V7l7-4 7 4v14"/><path d="M9 21v-6h6v6"/><path d="M9 11h.01M15 11h.01"/>
+            </svg>
+          </div>
+          <span class="path-label" data-i18n="path3Label">Für Unternehmen</span>
+          <h3 data-i18n="path3Title">Geräte im Bestand spenden</h3>
+          <p data-i18n="path3Desc">Auch größere Mengen nehmen wir entgegen: Datenschutz, Transport, Inventar und Spendenbeleg übernimmt WeiterWert — du übergibst nur die Geräte.</p>
+          <a href="mailto:unternehmen@weiterwert.de" class="btn btn-primary btn-block" data-i18n="path3Btn">Anfrage senden</a>
+        </div>
+
+        <div class="path-card">
+          <div class="icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M3 13l2-6h14l2 6"/><rect x="3" y="13" width="18" height="5" rx="1.5"/><circle cx="7.5" cy="18" r="1.5"/><circle cx="16.5" cy="18" r="1.5"/>
+            </svg>
+          </div>
+          <span class="path-label" data-i18n="path4Label">Für Aktive</span>
+          <h3 data-i18n="path4Title">Freiwillig transportieren</h3>
+          <p data-i18n="path4Desc">Unterstütze uns dabei, gespendete Geräte zu unseren Sammelstellen und weiter zu den Schulen zu bringen — mit Fahrzeug oder Zeit.</p>
+          <a href="mailto:helfen@weiterwert.de" class="btn btn-primary btn-block" data-i18n="path4Btn">Freiwillig helfen</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- WIRKUNG / MESSBARE ZAHLEN -->
+  <section id="wirkung" class="impact-bg">
+    <div class="container">
+      <div class="section-head">
+        <span class="eyebrow" data-i18n="impactEyebrow">Wirkung</span>
+        <h2 data-i18n="impactH2">Jede Zahl zählt</h2>
+        <p data-i18n="impactP">Wir veröffentlichen unsere Zahlen nach jeder Gerätelieferung — nachprüfbar, nicht gerundet.</p>
+      </div>
+
+      <div class="stats-grid">
+        <div class="stat">
+          <div class="stat-value pending">—</div>
+          <div class="stat-label" data-i18n="stat1Label">Geräte gesammelt</div>
+          <div class="stat-hint" data-i18n="stat1Hint">Reparierte und versandbereite Geräte</div>
+          <span class="stat-pending" data-i18n="statPending">Live-Zahl folgt</span>
+        </div>
+        <div class="stat">
+          <div class="stat-value pending">—</div>
+          <div class="stat-label" data-i18n="stat2Label">Menschen erreicht</div>
+          <div class="stat-hint" data-i18n="stat2Hint">Schüler:innen und Lehrkräfte mit Gerät</div>
+          <span class="stat-pending" data-i18n="statPending">Live-Zahl folgt</span>
+        </div>
+        <div class="stat">
+          <div class="stat-value pending">—</div>
+          <div class="stat-label" data-i18n="stat3Label">Ehrenamtliche im Einsatz</div>
+          <div class="stat-hint" data-i18n="stat3Hint">Menschen, die regelmäßig Zeit einbringen</div>
+          <span class="stat-pending" data-i18n="statPending">Live-Zahl folgt</span>
+        </div>
+        <div class="stat">
+          <div class="stat-value pending">—</div>
+          <div class="stat-label" data-i18n="stat4Label">Elektroschrott vermieden</div>
+          <div class="stat-hint" data-i18n="stat4Hint">Geräte, die nicht im Müll gelandet sind</div>
+          <span class="stat-pending" data-i18n="statPending">Live-Zahl folgt</span>
+        </div>
+      </div>
+
+      <p class="impact-note"><strong data-i18n="impactNoteTitle">Wann erscheinen die Zahlen?</strong><span data-i18n="impactNote"> WeiterWert ist eine neu gegründete Initiative. Nach unserer ersten Gerätelieferung veröffentlichen wir hier die ersten echten Zahlen. Bis dahin steht bei jeder Kennzahl eine Null — nicht weil wir untätig sind, sondern weil wir nichts behaupten, was wir nicht belegen können.</span></p>
+    </div>
+  </section>
+
+  <!-- PROZESS -->
   <section id="so-funktionierts">
     <div class="container">
       <div class="section-head">
         <span class="eyebrow" data-i18n="howEyebrow">Prozess</span>
         <h2 data-i18n="howH2">Wie funktioniert es?</h2>
-        <p data-i18n="howP">Vom Spenden bis zur Übergabe durchläuft jedes Gerät dieselben vier Schritte.</p>
+        <p data-i18n="howP">Vom Spenden bis zur Übergabe durchläuft jedes Gerät dieselben fünf Schritte.</p>
       </div>
 
       <div class="steps">
@@ -351,44 +739,187 @@
             </svg>
           </div>
           <h3 data-i18n="step1Title">Sammeln</h3>
-          <p data-i18n="step1Desc">Wir nehmen ungenutzte Computer, Tablets und Telefone von Privatpersonen und Organisationen entgegen.</p>
+          <p data-i18n="step1Desc">Wir nehmen ungenutzte Computer, Tablets und Telefone von Privatpersonen, Schulen und Organisationen entgegen.</p>
         </div>
         <div class="step">
           <div class="step-num">2</div>
           <div class="icon" aria-hidden="true">
             <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.1-3.1a4 4 0 01-5.4 5.4L6 21l-3-3 9.6-9.6a4 4 0 015.4-5.4l-3.1 3.1z"/>
+              <path d="M12 3l7 3v5c0 4.5-3 8.3-7 10-4-1.7-7-5.5-7-10V6l7-3z"/><path d="M9 12l2 2 4-4"/>
             </svg>
           </div>
-          <h3 data-i18n="step2Title">Reinigen &amp; Reparieren</h3>
-          <p data-i18n="step2Desc">Unser technisches Team prüft jedes Gerät, behebt Defekte und löscht vorherige Daten sicher.</p>
+          <h3 data-i18n="step2Title">Sicher löschen</h3>
+          <p data-i18n="step2Desc">Wir löschen alle Daten unwiederbringlich und dokumentieren die Löschung für jedes Gerät — damit dein Gerät wirklich neu ist.</p>
         </div>
         <div class="step">
           <div class="step-num">3</div>
           <div class="icon" aria-hidden="true">
             <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
-              <rect x="4" y="4" width="16" height="12" rx="1.5"/><path d="M2 20h20"/><path d="M9 8h6M9 11h4"/>
+              <path d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.1-3.1a4 4 0 01-5.4 5.4L6 21l-3-3 9.6-9.6a4 4 0 015.4-5.4l-3.1 3.1z"/>
             </svg>
           </div>
-          <h3 data-i18n="step3Title">Software installieren</h3>
-          <p data-i18n="step3Desc">Wir installieren ein aktuelles Betriebssystem sowie die nötige Lernsoftware und machen das Gerät einsatzbereit.</p>
+          <h3 data-i18n="step3Title">Reinigen &amp; Reparieren</h3>
+          <p data-i18n="step3Desc">Unser technisches Team prüft jedes Gerät, behebt Defekte und macht es wieder einsatzbereit.</p>
         </div>
         <div class="step">
           <div class="step-num">4</div>
           <div class="icon" aria-hidden="true">
             <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="4" y="4" width="16" height="12" rx="1.5"/><path d="M2 20h20"/><path d="M9 8h6M9 11h4"/>
+            </svg>
+          </div>
+          <h3 data-i18n="step4Title">Software installieren</h3>
+          <p data-i18n="step4Desc">Wir installieren ein aktuelles Betriebssystem sowie die nötige Lernsoftware und machen das Gerät einsatzbereit.</p>
+        </div>
+        <div class="step">
+          <div class="step-num">5</div>
+          <div class="icon" aria-hidden="true">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
               <path d="M3 11l18-7-7 18-2-8-8-2z"/>
             </svg>
           </div>
-          <h3 data-i18n="step4Title">Ausliefern</h3>
-          <p data-i18n="step4Desc">Über unser Freiwilligennetzwerk übergeben wir die Geräte an Schüler:innen und Lehrkräfte, die sie benötigen.</p>
+          <h3 data-i18n="step5Title">Ausliefern</h3>
+          <p data-i18n="step5Desc">Über unser Freiwilligennetzwerk übergeben wir die Geräte an Schüler:innen und Lehrkräfte, die sie benötigen.</p>
         </div>
+      </div>
+
+      <div class="callout">
+        <div class="icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M3 21h18M5 21V7l7-4 7 4v14"/><path d="M9 21v-6h6v6"/>
+          </svg>
+        </div>
+        <div class="callout-body">
+          <h3 data-i18n="corpTitle">Für Unternehmen und Organisationen</h3>
+          <p data-i18n="corpDesc">Wir nehmen auch größere Spendenmengen entgegen. Datenschutz, Transport, Inventar und Spendenbeleg übernimmt WeiterWert — Sie übergeben nur die Geräte.</p>
+        </div>
+        <a href="mailto:unternehmen@weiterwert.de" class="btn btn-primary" data-i18n="corpBtn">Kooperation anfragen</a>
       </div>
     </div>
   </section>
 
-  <!-- APPROACH (no fabricated numbers — honest, transparent framing) -->
-  <section id="unser-ansatz" class="approach-bg">
+  <!-- VERTRAUEN -->
+  <section id="vertrauen" class="trust-bg">
+    <div class="container">
+      <div class="section-head">
+        <span class="eyebrow" data-i18n="trustEyebrow">Vertrauen</span>
+        <h2 data-i18n="trustH2">Belegbare Geschichten statt Marketing</h2>
+        <p data-i18n="trustP">Nach unseren ersten Gerätelieferungen veröffentlichen wir hier echte Übergaben, unsere Freiwilligen und unsere Unterstützer.</p>
+      </div>
+
+      <div class="story-grid">
+        <article class="story-card">
+          <div class="media">
+            <!-- FOTO EINSETZEN: <img src="assets/img/story-1.jpg" alt="..." loading="lazy"> -->
+            <svg class="media-icon" width="42" height="42" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="8.5" cy="9.5" r="1.5"/><path d="M21 15l-5-4L7 19"/>
+            </svg>
+            <span class="media-tag" data-i18n="mediaTag">Foto folgt</span>
+          </div>
+          <h3 data-i18n="story1Title">Eine Übergabe</h3>
+          <p data-i18n="story1Desc">Wie ein Gerät von der Reparatur bis in die Hände seiner neuen Besitzerin geht — mit einem Interview.</p>
+        </article>
+        <article class="story-card">
+          <div class="media">
+            <!-- FOTO EINSETZEN: <img src="assets/img/story-2.jpg" alt="..." loading="lazy"> -->
+            <svg class="media-icon" width="42" height="42" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="8.5" cy="9.5" r="1.5"/><path d="M21 15l-5-4L7 19"/>
+            </svg>
+            <span class="media-tag" data-i18n="mediaTag">Foto folgt</span>
+          </div>
+          <h3 data-i18n="story2Title">Aus der Werkstatt</h3>
+          <p data-i18n="story2Desc">Was unsere Techniker:innen am häufigsten reparieren und wie sie es lösen.</p>
+        </article>
+        <article class="story-card">
+          <div class="media">
+            <!-- FOTO EINSETZEN: <img src="assets/img/story-3.jpg" alt="..." loading="lazy"> -->
+            <svg class="media-icon" width="42" height="42" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="8.5" cy="9.5" r="1.5"/><path d="M21 15l-5-4L7 19"/>
+            </svg>
+            <span class="media-tag" data-i18n="mediaTag">Foto folgt</span>
+          </div>
+          <h3 data-i18n="story3Title">Eine Partnerschaft</h3>
+          <p data-i18n="story3Desc">Wie wir mit Schulen und Unternehmen gemeinsam Projekte umsetzen.</p>
+        </article>
+      </div>
+
+      <p class="impact-note"><strong data-i18n="storiesNoteTitle">Geschichten folgen.</strong><span data-i18n="storiesNote"> Wir veröffentlichen die ersten Geschichten nach unserer ersten Gerätelieferung. Wir schreiben lieber eine echte Geschichte als eine erfundene.</span></p>
+
+      <div class="info-grid">
+        <div class="info-card">
+          <div class="icon" aria-hidden="true">
+            <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c1-3.5 3.5-5.5 6.5-5.5s5.5 2 6.5 5.5"/><path d="M17 11.5a3 3 0 100-6M18 20c-.4-2.6-1.8-4.4-3.8-5.2"/>
+            </svg>
+          </div>
+          <h3 data-i18n="volTitle">Unsere Freiwilligen</h3>
+          <p data-i18n="volP">Jedes Gerät erreicht jemanden durch ein Team. Das Netzwerk hat drei Kernrollen — technisch, logistisch und koordinierend. Wer Zeit hat, gehört dazu.</p>
+        </div>
+        <div class="info-card">
+          <div class="icon" aria-hidden="true">
+            <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M8 3H5a2 2 0 00-2 2v3M16 3h3a2 2 0 012 2v3M8 21H5a2 2 0 01-2-2v-3M16 21h3a2 2 0 002-2v-3"/><rect x="8" y="8" width="8" height="8" rx="1"/>
+            </svg>
+          </div>
+          <h3 data-i18n="receiptTitle">Spendenbeleg</h3>
+          <p data-i18n="receiptDesc">Für gespendete Geräte und geleistete Ehrenamtsstunden stellen wir auf Wunsch eine Bescheinigung aus. Angaben zu Rechtsform und Registereintrag veröffentlichen wir an eigener Stelle.</p>
+        </div>
+      </div>
+
+      <div class="roles-grid">
+        <div class="role-card">
+          <div class="avatar" aria-hidden="true">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.1-3.1a4 4 0 01-5.4 5.4L6 21l-3-3 9.6-9.6a4 4 0 015.4-5.4l-3.1 3.1z"/>
+            </svg>
+          </div>
+          <div>
+            <h3 data-i18n="vol1Name">Technik</h3>
+            <p data-i18n="vol1Role">Geräte prüfen, Fehler beheben und Daten sicher löschen.</p>
+          </div>
+        </div>
+        <div class="role-card">
+          <div class="avatar" aria-hidden="true">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M3 13l2-6h14l2 6"/><rect x="3" y="13" width="18" height="5" rx="1.5"/><circle cx="7.5" cy="18" r="1.5"/><circle cx="16.5" cy="18" r="1.5"/>
+            </svg>
+          </div>
+          <div>
+            <h3 data-i18n="vol2Name">Logistik</h3>
+            <p data-i18n="vol2Role">Geräte von Sammelstellen zu Schulen und zu den Menschen bringen, die sie brauchen.</p>
+          </div>
+        </div>
+        <div class="role-card">
+          <div class="avatar" aria-hidden="true">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/>
+            </svg>
+          </div>
+          <div>
+            <h3 data-i18n="vol3Name">Koordination</h3>
+            <p data-i18n="vol3Role">Bringt Spender:innen, Bedürftige und Freiwillige in einem Plan zusammen.</p>
+          </div>
+        </div>
+      </div>
+
+      <div style="margin-top:40px;">
+        <div class="section-head">
+          <h2 style="font-size:1.35rem;margin-bottom:10px;" data-i18n="partnerTitle">Unsere Unterstützer</h2>
+          <p data-i18n="partnerP">Logos unserer ersten Unterstützer veröffentlichen wir hier.</p>
+        </div>
+        <div class="partner-row">
+          <div class="partner-slot">LOGO</div>
+          <div class="partner-slot">LOGO</div>
+          <div class="partner-slot">LOGO</div>
+          <div class="partner-slot">LOGO</div>
+        </div>
+        <p class="impact-note" style="margin-top:20px;"><span data-i18n="partnerNote">Platzhalter für Logos — wird mit den Marken unserer Unterstützer gefüllt.</span></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- UNSER ANSATZ -->
+  <section id="unser-ansatz">
     <div class="container">
       <div class="section-head">
         <span class="eyebrow" data-i18n="approachEyebrow">Unser Ansatz</span>
@@ -430,62 +961,37 @@
     </div>
   </section>
 
-  <!-- CTA / HELP -->
-  <section id="mitmachen">
-    <div class="container">
-      <div class="section-head">
-        <span class="eyebrow" data-i18n="helpEyebrow">Mitmachen</span>
-        <h2 data-i18n="helpH2">Wie kannst du helfen?</h2>
-        <p data-i18n="helpP">Auf einem von drei einfachen Wegen kannst du Teil dieses Netzwerks werden.</p>
-      </div>
-
-      <div class="help-grid">
-        <div class="help-card">
-          <div class="icon" aria-hidden="true">
-            <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
-              <rect x="4" y="4" width="16" height="12" rx="1.5"/><path d="M2 20h20"/><path d="M12 8v4"/>
-            </svg>
-          </div>
-          <h3 data-i18n="help1Title">Gerät spenden</h3>
-          <p data-i18n="help1Desc">Spende deinen ungenutzten Computer, dein Tablet oder Telefon — wir reparieren es und bringen es zu einer Schülerin oder einem Schüler.</p>
-          <a href="mailto:spende@weiterwert.de" class="btn btn-primary" data-i18n="help1Btn">Gerät spenden</a>
-        </div>
-        <div class="help-card">
-          <div class="icon" aria-hidden="true">
-            <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M3 13l2-6h14l2 6"/><rect x="3" y="13" width="18" height="5" rx="1.5"/><circle cx="7.5" cy="18" r="1.5"/><circle cx="16.5" cy="18" r="1.5"/>
-            </svg>
-          </div>
-          <h3 data-i18n="help2Title">Freiwillig transportieren</h3>
-          <p data-i18n="help2Desc">Unterstütze uns dabei, gespendete Geräte zu unseren Sammelstellen zu bringen — mit Fahrzeug oder Zeit.</p>
-          <a href="mailto:helfen@weiterwert.de" class="btn btn-primary" data-i18n="help2Btn">Freiwillig helfen</a>
-        </div>
-        <div class="help-card">
-          <div class="icon" aria-hidden="true">
-            <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M9 18h6M10 21h4M12 3a6 6 0 00-3.6 10.8c.6.45 1 .95 1.1 1.7h5a2 2 0 011.1-1.7A6 6 0 0012 3z"/>
-            </svg>
-          </div>
-          <h3 data-i18n="help3Title">Projekt vorschlagen</h3>
-          <p data-i18n="help3Desc">Kennst du eine Schule, Schülerin, einen Schüler oder eine Gemeinschaft mit Bedarf? Schlag uns ein Projekt vor.</p>
-          <a href="mailto:projekt@weiterwert.de" class="btn btn-primary" data-i18n="help3Btn">Projekt vorschlagen</a>
-        </div>
-      </div>
-    </div>
-  </section>
-
 </main>
 
 <footer>
-  <div class="container footer-inner">
-    <div>
-      <div class="footer-brand">WeiterWert</div>
-      <div class="footer-meta" data-i18n="footerMeta">Ein Gemeinschaftsnetzwerk, das Technologie und Bildung verbindet</div>
+  <div class="container">
+    <div class="footer-inner">
+      <div>
+        <div class="footer-brand">Weiter<span class="brand-name-accent">Wert</span></div>
+        <div class="footer-meta" data-i18n="footerMeta">Ein Gemeinschaftsnetzwerk, das Technologie und Bildung verbindet</div>
+      </div>
+      <div class="footer-col">
+        <h4 data-i18n="footerNavigate">Navigation</h4>
+        <div class="footer-links">
+          <a href="#so-funktionierts" data-i18n="navHow">So funktioniert's</a>
+          <a href="#wirkung" data-i18n="navImpact">Wirkung</a>
+          <a href="#vertrauen" data-i18n="footerTrust">Vertrauen</a>
+          <a href="#mitmachen" data-i18n="navHelp">Mitmachen</a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4 data-i18n="footerContact">Kontakt</h4>
+        <div class="footer-links">
+          <a href="mailto:spende@weiterwert.de">spende@weiterwert.de</a>
+          <a href="mailto:projekt@weiterwert.de">projekt@weiterwert.de</a>
+          <a href="mailto:unternehmen@weiterwert.de">unternehmen@weiterwert.de</a>
+          <a href="mailto:helfen@weiterwert.de">helfen@weiterwert.de</a>
+        </div>
+      </div>
     </div>
-    <div class="footer-links">
-      <a href="#so-funktionierts" data-i18n="navHow">So funktioniert's</a>
-      <a href="#unser-ansatz" data-i18n="navApproach">Unser Ansatz</a>
-      <a href="#mitmachen" data-i18n="navHelp">Mitmachen</a>
+    <div class="footer-bottom">
+      <span data-i18n="footerCopyright">© WeiterWert — Initiative für Technologie und Bildung</span>
+      <span data-i18n="footerLegalHint">Impressum und Datenschutz folgen.</span>
     </div>
   </div>
 </footer>
@@ -496,64 +1002,190 @@
     tr: {
       _title: "WeiterWert — Teknolojiye Yeniden Hayat Veriyoruz",
       _desc: "Kullanılmayan bilgisayarları topluyor, onarıyor ve ihtiyacı olan öğrencilere ulaştırıyoruz. Elektronik atığı azaltırken eğitime erişimi büyütüyoruz.",
-      navHow: "Nasıl Çalışır", navApproach: "Yaklaşımımız", navHelp: "Yardım Et", navCta: "Cihaz Bağışla",
+      navHow: "Nasıl Çalışır", navImpact: "Etki", navHelp: "Yardım Et", navCta: "Cihaz Bağışla",
       heroEyebrow: "Topluluk Odaklı Teknoloji Girişimi",
       heroH1: "Teknolojiye yeniden hayat veriyoruz, eğitimi herkese ulaştırıyoruz.",
       heroLead: "Kullanılmayan bilgisayarları, tabletleri ve telefonları topluyor, onarıyor ve ihtiyacı olan öğrenci ile eğitimcilere ulaştırıyoruz. Bir cihazın çöpe gitmesini değil, bir öğrencinin önünün açılmasını sağlıyoruz.",
-      heroCtaPrimary: "Cihaz Bağışla", heroCtaSecondary: "Nasıl Çalışıyoruz",
+      heroCtaPrimary: "Laptop Bağışla", heroCtaSecondary: "Cihaz Talep Et",
       heroArtTitle: "Bağışlanan bir dizüstü bilgisayarın toplanma, onarım ve bir öğrenciye teslim edilme sürecini gösteren çizim",
       heroFigcaption: "Bir cihazın yolculuğu: topla → onar → yazılım yükle → ulaştır",
       svgLabel1: "Topla", svgLabel2: "Onar", svgLabel3: "Yazılım Yükle", svgLabel4: "Ulaştır",
-      howEyebrow: "Süreç", howH2: "Nasıl çalışıyoruz?", howP: "Bağıştan teslimata kadar her cihaz aynı dört adımdan geçer.",
-      step1Title: "Topla", step1Desc: "Bireylerden ve kurumlardan kullanılmayan bilgisayar, tablet ve telefonları teslim alıyoruz.",
-      step2Title: "Temizle & Onar", step2Desc: "Cihazları teknik ekibimiz kontrol eder, arızaları giderir ve önceki verileri güvenle siler.",
-      step3Title: "Yazılım Yükle", step3Desc: "Güncel işletim sistemini ve gerekli eğitim yazılımlarını kurup cihazı kullanıma hazırlıyoruz.",
-      step4Title: "Ulaştır", step4Desc: "Gönüllü ağımız aracılığıyla cihazları ihtiyaç sahibi öğrenci ve eğitimcilere teslim ediyoruz.",
+
+      pathsEyebrow: "Katılma Yolları",
+      pathsH2: "Ağın bir parçası olmanın dört yolu",
+      pathsP: "Cihaz, talep, kurum ya da zaman — her yol sayılır.",
+      path1Label: "Bireyler için", path1Title: "Cihaz Bağışla",
+      path1Desc: "Kullanmadığın bilgisayarı, tabletini ya da telefonunu bağışla; onarıp ihtiyaç sahibi bir öğrenciye ulaştıralım.",
+      path1Btn: "Cihaz Bağışla",
+      path2Label: "Okullar ve aileler için", path2Title: "Cihaz Talep Et",
+      path2Desc: "İhtiyacı olan bir okulu, öğrenciyi ya da topluluğu biliyor musun? Bize bildir, birlikte uygun cihazı bulalım.",
+      path2Btn: "Talep Bildir",
+      path3Label: "Kurumlar için", path3Title: "Stoktaki Cihazları Bağışla",
+      path3Desc: "Daha büyük miktarları da kabul ediyoruz: Veri güvenliği, taşıma, envanter ve bağış makbuzunu biz üstleniyoruz — sen sadece cihazları teslim edersin.",
+      path3Btn: "İş Birliği Sor",
+      path4Label: "Aktif olmak için", path4Title: "Gönüllü Olarak Taşı",
+      path4Desc: "Bağışlanan cihazları toplama noktalarından okullara taşımak için aracın ya da zamanınla destek ol.",
+      path4Btn: "Gönüllü Ol",
+
+      impactEyebrow: "Etki",
+      impactH2: "Her sayı önemlidir",
+      impactP: "Rakamlarımızı her cihaz teslimatından sonra yayınlıyoruz — yuvarlanmadan, doğrulanabilir biçimde.",
+      stat1Label: "Toplanan cihaz", stat1Hint: "Onarımı tamamlanan ve dağıtıma hazır cihazlar",
+      stat2Label: "Ulaşılan kişi", stat2Hint: "Cihazı teslim aldığı öğrenci ve öğretmenler",
+      stat3Label: "Gönüllü sayısı", stat3Hint: "Düzenli olarak katkı sunan gönüllüler",
+      stat4Label: "Önlenen elektronik atık", stat4Hint: "Atığa gitmek yerine yeniden kullanıma kazandırılan cihazlar",
+      statPending: "Canlı sayı geliyor",
+      impactNoteTitle: "Sayılar ne zaman yayınlanacak?",
+      impactNote: " WeiterWert yeni kurulan bir girişim. İlk cihaz teslimatlarımızdan sonra ilk gerçek rakamları burada yayınlayacağız. O güne kadar gösterge değerleri açık kalıyor — çalışmadığımız için değil, belgeleyemediğimiz hiçbir şeyi iddia etmediğimiz için.",
+
+      howEyebrow: "Süreç", howH2: "Nasıl çalışıyoruz?",
+      howP: "Bağıştan teslimata kadar her cihaz aynı beş adımdan geçer.",
+      step1Title: "Topla",
+      step1Desc: "Bireylerden, okullardan ve kurumlardan kullanılmayan bilgisayar, tablet ve telefonları teslim alıyoruz.",
+      step2Title: "Verileri Güvenle Sil",
+      step2Desc: "Tüm verileri geri dönüşü mümkün olmayacak biçimde siliyor, her cihaz için silme işlemini belgeliyoruz — böylece cihazın gerçekten yeni olduğundan emin olursun.",
+      step3Title: "Temizle & Onar",
+      step3Desc: "Teknik ekibimiz her cihazı kontrol ediyor, arızaları gideriyor ve yeniden kullanılabilir hale getiriyor.",
+      step4Title: "Yazılım Yükle",
+      step4Desc: "Güncel işletim sistemini ve gerekli eğitim yazılımlarını kurup cihazı kullanıma hazırlıyoruz.",
+      step5Title: "Teslim Et",
+      step5Desc: "Gönüllü ağımız aracılığıyla cihazları ihtiyaç sahibi öğrenci ve eğitimcilere teslim ediyoruz.",
+      corpTitle: "Şirketler ve kurumlar için",
+      corpDesc: "Daha büyük bağış miktarlarını da kabul ediyoruz. Veri güvenliği, taşıma, envanter ve bağış makbuzunu WeiterWert üstleniyor — sen sadece cihazları teslim edersin.",
+      corpBtn: "İş Birliği Sor",
+
+      trustEyebrow: "Güven",
+      trustH2: "Pazarlama yerine belgelenebilir hikâyeler",
+      trustP: "İlk cihaz teslimatlarımızdan sonra burada gerçek teslimleri, gönüllülerimizi ve destekçilerimizi yayınlayacağız.",
+      mediaTag: "Foto geliyor",
+      story1Title: "Bir Teslimat",
+      story1Desc: "Bir cihazın onarımdan yeni sahibinin eline uzanan yolculuğu — bir söyleşiyle birlikte.",
+      story2Title: "Atölyeden",
+      story2Desc: "Teknik ekibimizin en sık karşılaştığı onarımlar ve bunları nasıl çözdükleri.",
+      story3Title: "Bir İş Birliği",
+      story3Desc: "Okullar ve kurumlarla birlikte yürüttüğümüz projelerin hikâyesi.",
+      storiesNoteTitle: "Hikâyeler geliyor.",
+      storiesNote: " İlk hikâyelerimizi ilk cihaz teslimatlarımızdan sonra yayınlayacağız. Uydurma bir hikâyeye değil, gerçek bir hikâyeye tercih veriyoruz.",
+      volTitle: "Gönüllülerimiz",
+      volP: "Her cihaz bir ekiple ulaşır. Ağın üç temel rolü var — teknik, lojistik ve koordinasyon. Zamanı olan herkes bu ağın parçasıdır.",
+      receiptTitle: "Bağış Makbuzu",
+      receiptDesc: "Bağışlanan cihazlar ve harcanan gönüllü saatleri için talep üzerine belge düzenliyoruz. Hukuki yapı ve resmî kayıt bilgilerini ayrı bir alanda yayınlayacağız.",
+      vol1Name: "Teknik", vol1Role: "Cihazları kontrol eder, arızaları giderir ve verileri güvenle siler.",
+      vol2Name: "Lojistik", vol2Role: "Cihazları toplama noktalarından okullara ve ihtiyaç sahiplerine taşır.",
+      vol3Name: "Koordinasyon", vol3Role: "Bağışçıları, ihtiyaç sahiplerini ve gönüllüleri aynı plan altında buluşturur.",
+      partnerTitle: "Destekçilerimiz",
+      partnerP: "İlk destekçilerimizin logolarını burada yayınlayacağız.",
+      partnerNote: "Logo yerleştirme alanı — destekçilerimizin markalarıyla doldurulacak.",
+
       approachEyebrow: "Yaklaşımımız", approachH2: "Küçük başlıyoruz, şeffaf ilerliyoruz",
       approachP: "Yeni kurulan bir girişim olarak büyük vaatler yerine somut, doğrulanabilir adımlarla ilerlemeyi tercih ediyoruz.",
       approach1Title: "Elektronik atığı azaltıyoruz", approach1Desc: "Çöpe gitmek üzere olan her cihaz, onarılarak yeniden bir amaca hizmet ediyor.",
       approach2Title: "Eğitime erişimi büyütüyoruz", approach2Desc: "Bir bilgisayar, bir öğrenci için derse girebilmek ve ödevini tamamlayabilmek demek.",
       approach3Title: "Yerel bir gönüllü ağı kuruyoruz", approach3Desc: "Bağışçıları, tamircileri ve taşıma gönüllülerini aynı amaç etrafında bir araya getiriyoruz.",
       noteStrong: "Şeffaflık notu:", noteRest: " WeiterWert yeni kurulan bir girişimdir. İlk cihaz teslimatlarımıza hazırlanıyoruz ve sürecin her adımını, gerçek sayılarla birlikte bu sayfada paylaşacağız.",
-      helpEyebrow: "Katkıda Bulun", helpH2: "Nasıl yardımcı olabilirsin?", helpP: "Üç basit yoldan biriyle bu ağın bir parçası olabilirsin.",
-      help1Title: "Cihaz Bağışla", help1Desc: "Kullanmadığınız bilgisayar, tablet veya telefonu bağışlayın; onarıp bir öğrenciye ulaştıralım.", help1Btn: "Cihaz Bağışla",
-      help2Title: "Taşıma Gönüllüsü Ol", help2Desc: "Bağışlanan cihazların toplama noktalarına ulaştırılmasına araç veya zamanınla destek ol.", help2Btn: "Gönüllü Ol",
-      help3Title: "Proje Öner", help3Desc: "Bölgenizde ihtiyaç sahibi bir okul, öğrenci ya da topluluk mu var? Bize önerin.", help3Btn: "Proje Öner",
-      footerMeta: "Teknoloji ve eğitim arasında köprü kuran topluluk ağı", langAria: "Dil seçimi", navAria: "Ana menü"
+
+      footerMeta: "Teknoloji ve eğitim arasında köprü kuran topluluk ağı",
+      footerNavigate: "Gezinme", footerTrust: "Güven", footerContact: "İletişim",
+      footerCopyright: "© WeiterWert — Teknoloji ve eğitim için girişim",
+      footerLegalHint: "İmza ve gizlilik metinleri hazırlanıyor.",
+      langAria: "Dil seçimi", navAria: "Ana menü"
     },
     de: {
       _title: "WeiterWert — Technologie neues Leben schenken",
       _desc: "Wir sammeln ungenutzte Computer, reparieren sie und bringen sie zu Schüler:innen, die sie brauchen. Wir reduzieren Elektroschrott und erweitern den Zugang zu Bildung.",
-      navHow: "So funktioniert's", navApproach: "Unser Ansatz", navHelp: "Mitmachen", navCta: "Gerät spenden",
+      navHow: "So funktioniert's", navImpact: "Wirkung", navHelp: "Mitmachen", navCta: "Gerät spenden",
       heroEyebrow: "Gemeinschaftsbasierte Technologieinitiative",
       heroH1: "Wir schenken Technologie neues Leben und bringen Bildung zu allen.",
       heroLead: "Wir sammeln ungenutzte Computer, Tablets und Telefone, reparieren sie und bringen sie zu Schüler:innen und Lehrkräften, die sie brauchen. Kein Gerät soll im Müll landen — stattdessen soll es einer Person neue Möglichkeiten eröffnen.",
-      heroCtaPrimary: "Gerät spenden", heroCtaSecondary: "So funktioniert's",
+      heroCtaPrimary: "Laptop spenden", heroCtaSecondary: "Gerät beantragen",
       heroArtTitle: "Illustration des Weges eines gespendeten Laptops: Sammlung, Reparatur und Übergabe an eine Schülerin oder einen Schüler",
       heroFigcaption: "Der Weg eines Geräts: sammeln → reparieren → Software installieren → ausliefern",
       svgLabel1: "Sammeln", svgLabel2: "Reparieren", svgLabel3: "Software", svgLabel4: "Ausliefern",
-      howEyebrow: "Prozess", howH2: "Wie funktioniert es?", howP: "Vom Spenden bis zur Übergabe durchläuft jedes Gerät dieselben vier Schritte.",
-      step1Title: "Sammeln", step1Desc: "Wir nehmen ungenutzte Computer, Tablets und Telefone von Privatpersonen und Organisationen entgegen.",
-      step2Title: "Reinigen & Reparieren", step2Desc: "Unser technisches Team prüft jedes Gerät, behebt Defekte und löscht vorherige Daten sicher.",
-      step3Title: "Software installieren", step3Desc: "Wir installieren ein aktuelles Betriebssystem sowie die nötige Lernsoftware und machen das Gerät einsatzbereit.",
-      step4Title: "Ausliefern", step4Desc: "Über unser Freiwilligennetzwerk übergeben wir die Geräte an Schüler:innen und Lehrkräfte, die sie benötigen.",
+
+      pathsEyebrow: "Mitmachen",
+      pathsH2: "Vier Wege, Teil des Netzwerks zu werden",
+      pathsP: "Ob Gerät, Anfrage, Unternehmen oder Zeit — jeder Weg zählt.",
+      path1Label: "Für Privatpersonen", path1Title: "Gerät spenden",
+      path1Desc: "Spende deinen ungenutzten Computer, dein Tablet oder Telefon — wir reparieren es und bringen es zu einer Schülerin oder einem Schüler.",
+      path1Btn: "Gerät spenden",
+      path2Label: "Für Schulen & Familien", path2Title: "Gerät beantragen",
+      path2Desc: "Kennst du eine Schule, eine Schülerin, einen Schüler oder eine Gemeinschaft mit Bedarf? Schlag uns dein Projekt vor — wir suchen das passende Gerät.",
+      path2Btn: "Gerät beantragen",
+      path3Label: "Für Unternehmen", path3Title: "Geräte im Bestand spenden",
+      path3Desc: "Auch größere Mengen nehmen wir entgegen: Datenschutz, Transport, Inventar und Spendenbeleg übernimmt WeiterWert — du übergibst nur die Geräte.",
+      path3Btn: "Anfrage senden",
+      path4Label: "Für Aktive", path4Title: "Freiwillig transportieren",
+      path4Desc: "Unterstütze uns dabei, gespendete Geräte zu unseren Sammelstellen und weiter zu den Schulen zu bringen — mit Fahrzeug oder Zeit.",
+      path4Btn: "Freiwillig helfen",
+
+      impactEyebrow: "Wirkung",
+      impactH2: "Jede Zahl zählt",
+      impactP: "Wir veröffentlichen unsere Zahlen nach jeder Gerätelieferung — nachprüfbar, nicht gerundet.",
+      stat1Label: "Geräte gesammelt", stat1Hint: "Reparierte und versandbereite Geräte",
+      stat2Label: "Menschen erreicht", stat2Hint: "Schüler:innen und Lehrkräfte mit Gerät",
+      stat3Label: "Ehrenamtliche im Einsatz", stat3Hint: "Menschen, die regelmäßig Zeit einbringen",
+      stat4Label: "Elektroschrott vermieden", stat4Hint: "Geräte, die nicht im Müll gelandet sind",
+      statPending: "Live-Zahl folgt",
+      impactNoteTitle: "Wann erscheinen die Zahlen?",
+      impactNote: " WeiterWert ist eine neu gegründete Initiative. Nach unserer ersten Gerätelieferung veröffentlichen wir hier die ersten echten Zahlen. Bis dahin bleiben die Kennzahlen offen — nicht weil wir untätig sind, sondern weil wir nichts behaupten, was wir nicht belegen können.",
+
+      howEyebrow: "Prozess", howH2: "Wie funktioniert es?",
+      howP: "Vom Spenden bis zur Übergabe durchläuft jedes Gerät dieselben fünf Schritte.",
+      step1Title: "Sammeln",
+      step1Desc: "Wir nehmen ungenutzte Computer, Tablets und Telefone von Privatpersonen, Schulen und Organisationen entgegen.",
+      step2Title: "Sicher löschen",
+      step2Desc: "Wir löschen alle Daten unwiederbringlich und dokumentieren die Löschung für jedes Gerät — damit dein Gerät wirklich neu ist.",
+      step3Title: "Reinigen & Reparieren",
+      step3Desc: "Unser technisches Team prüft jedes Gerät, behebt Defekte und macht es wieder einsatzbereit.",
+      step4Title: "Software installieren",
+      step4Desc: "Wir installieren ein aktuelles Betriebssystem sowie die nötige Lernsoftware und machen das Gerät einsatzbereit.",
+      step5Title: "Ausliefern",
+      step5Desc: "Über unser Freiwilligennetzwerk übergeben wir die Geräte an Schüler:innen und Lehrkräfte, die sie benötigen.",
+      corpTitle: "Für Unternehmen und Organisationen",
+      corpDesc: "Wir nehmen auch größere Spendenmengen entgegen. Datenschutz, Transport, Inventar und Spendenbeleg übernimmt WeiterWert — Sie übergeben nur die Geräte.",
+      corpBtn: "Kooperation anfragen",
+
+      trustEyebrow: "Vertrauen",
+      trustH2: "Belegbare Geschichten statt Marketing",
+      trustP: "Nach unseren ersten Gerätelieferungen veröffentlichen wir hier echte Übergaben, unsere Freiwilligen und unsere Unterstützer.",
+      mediaTag: "Foto folgt",
+      story1Title: "Eine Übergabe",
+      story1Desc: "Wie ein Gerät von der Reparatur bis in die Hände seiner neuen Besitzerin geht — mit einem Interview.",
+      story2Title: "Aus der Werkstatt",
+      story2Desc: "Was unsere Techniker:innen am häufigsten reparieren und wie sie es lösen.",
+      story3Title: "Eine Partnerschaft",
+      story3Desc: "Wie wir mit Schulen und Unternehmen gemeinsam Projekte umsetzen.",
+      storiesNoteTitle: "Geschichten folgen.",
+      storiesNote: " Wir veröffentlichen die ersten Geschichten nach unserer ersten Gerätelieferung. Wir schreiben lieber eine echte Geschichte als eine erfundene.",
+      volTitle: "Unsere Freiwilligen",
+      volP: "Jedes Gerät erreicht jemanden durch ein Team. Das Netzwerk hat drei Kernrollen — technisch, logistisch und koordinierend. Wer Zeit hat, gehört dazu.",
+      receiptTitle: "Spendenbeleg",
+      receiptDesc: "Für gespendete Geräte und geleistete Ehrenamtsstunden stellen wir auf Wunsch eine Bescheinigung aus. Angaben zu Rechtsform und Registereintrag veröffentlichen wir an eigener Stelle.",
+      vol1Name: "Technik", vol1Role: "Geräte prüfen, Fehler beheben und Daten sicher löschen.",
+      vol2Name: "Logistik", vol2Role: "Geräte von Sammelstellen zu Schulen und zu den Menschen bringen, die sie brauchen.",
+      vol3Name: "Koordination", vol3Role: "Bringt Spender:innen, Bedürftige und Freiwillige in einem Plan zusammen.",
+      partnerTitle: "Unsere Unterstützer",
+      partnerP: "Logos unserer ersten Unterstützer veröffentlichen wir hier.",
+      partnerNote: "Platzhalter für Logos — wird mit den Marken unserer Unterstützer gefüllt.",
+
       approachEyebrow: "Unser Ansatz", approachH2: "Wir starten klein und bleiben transparent",
       approachP: "Als junge Initiative setzen wir auf konkrete, nachprüfbare Schritte statt große Versprechen.",
       approach1Title: "Wir reduzieren Elektroschrott", approach1Desc: "Jedes Gerät, das sonst im Müll gelandet wäre, dient nach der Reparatur wieder einem Zweck.",
       approach2Title: "Wir erweitern den Zugang zu Bildung", approach2Desc: "Ein Computer bedeutet für eine Schülerin oder einen Schüler, am Unterricht teilnehmen und Hausaufgaben erledigen zu können.",
       approach3Title: "Wir bauen ein lokales Freiwilligennetzwerk auf", approach3Desc: "Wir bringen Spender:innen, Techniker:innen und Transport-Freiwillige rund um dasselbe Ziel zusammen.",
       noteStrong: "Transparenzhinweis:", noteRest: " WeiterWert ist eine neu gegründete Initiative. Wir bereiten unsere ersten Gerätelieferungen vor und werden jeden Schritt mit echten Zahlen auf dieser Seite teilen.",
-      helpEyebrow: "Mitmachen", helpH2: "Wie kannst du helfen?", helpP: "Auf einem von drei einfachen Wegen kannst du Teil dieses Netzwerks werden.",
-      help1Title: "Gerät spenden", help1Desc: "Spende deinen ungenutzten Computer, dein Tablet oder Telefon — wir reparieren es und bringen es zu einer Schülerin oder einem Schüler.", help1Btn: "Gerät spenden",
-      help2Title: "Freiwillig transportieren", help2Desc: "Unterstütze uns dabei, gespendete Geräte zu unseren Sammelstellen zu bringen — mit Fahrzeug oder Zeit.", help2Btn: "Freiwillig helfen",
-      help3Title: "Projekt vorschlagen", help3Desc: "Kennst du eine Schule, Schülerin, einen Schüler oder eine Gemeinschaft mit Bedarf? Schlag uns ein Projekt vor.", help3Btn: "Projekt vorschlagen",
-      footerMeta: "Ein Gemeinschaftsnetzwerk, das Technologie und Bildung verbindet", langAria: "Sprachauswahl", navAria: "Hauptmenü"
+
+      footerMeta: "Ein Gemeinschaftsnetzwerk, das Technologie und Bildung verbindet",
+      footerNavigate: "Navigation", footerTrust: "Vertrauen", footerContact: "Kontakt",
+      footerCopyright: "© WeiterWert — Initiative für Technologie und Bildung",
+      footerLegalHint: "Impressum und Datenschutz folgen.",
+      langAria: "Sprachauswahl", navAria: "Hauptmenü"
     }
   };
 
   // German is the base language: the HTML is written in German and any key
   // missing from another language falls back to it. To add a language, add a
-  // dictionary here and a matching .lang-btn in the header.
+  // dictionary here and a matching <option> in the header select.
   var BASE = 'de';
   function t(lang, key){
     var dict = translations[lang] || {};
@@ -574,15 +1206,15 @@
     document.title = t(lang, '_title');
     var desc = document.querySelector('meta[name="description"]');
     if(desc){ desc.setAttribute('content', t(lang, '_desc')); }
-    document.querySelectorAll('.lang-btn').forEach(function(b){
-      b.setAttribute('aria-pressed', b.getAttribute('data-lang') === lang ? 'true' : 'false');
-    });
+    var sel = document.querySelector('.lang-select');
+    if(sel){ sel.value = lang; }
     try{ localStorage.setItem('ww_lang', lang); }catch(e){}
   }
 
-  document.querySelectorAll('.lang-btn').forEach(function(btn){
-    btn.addEventListener('click', function(){ applyLang(btn.getAttribute('data-lang')); });
-  });
+  var langSelect = document.querySelector('.lang-select');
+  if(langSelect){
+    langSelect.addEventListener('change', function(){ applyLang(langSelect.value); });
+  }
 
   var saved = BASE;
   try{ saved = localStorage.getItem('ww_lang') || BASE; }catch(e){}
