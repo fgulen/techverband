@@ -35,12 +35,26 @@
 
 ## FAZ 0 – Canlı site (`index.html`)
 
+### Task 0: Canlı deploy'a sadece site dosyaları gitsin (`.vercelignore`)
+
+**Neden:** `techverband` Vercel projesi repo kökünü statik olarak yayınlıyor. Bu görev olmadan bir sonraki push/deploy `docs/` (iç hukuk risk listesi + orijinal prompt), `tests/`, `package.json`, `platform/` ve olası `platform/.env.local` dosyasını weiterwert.de'de herkese açar. **Bu görev bitmeden push veya deploy yapılmaz.**
+
+**Files:**
+- Create: `.vercelignore`
+- Create: `tests/static/deploy-scope.test.mjs`
+
+- [ ] **Step 1: Failing test** – `.vercelignore` var ve şu desenleri içeriyor: `/*` (her şeyi hariç tut), `!/index.html`, `!/impressum.html`, `!/datenschutz.html`, `!/assets`. `docs`, `platform`, `tests`, `package.json` için ayrı bir `!` istisnası **yok**.
+- [ ] **Step 2:** `node --test tests/static` → FAIL.
+- [ ] **Step 3:** `.vercelignore` yaz (yukarıdaki 5 satır, başta açıklama yorumu).
+- [ ] **Step 4:** PASS. Fatih onay verirse `vercel deploy` (preview) ile doğrula: `/docs/...` ve `/package.json` 404, `/` ve `/assets/logo-mark.svg` 200.
+- [ ] **Step 5: Commit** – `"Restrict live site deploy to static site files"`
+
 ### Task 1: Spendenbeleg vaadi, „in Gründung" ifadesi, LOGO yer tutucuları
 
 **Files:**
 - Modify: `index.html` (DE HTML metinleri ~617, ~706, ~776-777, ~819-828, ~901-902; `translations.tr` ~973-980; `translations.de` ~1017-1077)
 - Create: `tests/static/legal-copy.test.mjs`
-- Create: `package.json` (kök; sadece `"type":"module"` ve `"scripts":{"test:static":"node --test tests/static"}`, bağımlılık yok)
+- Create: `package.json` (kök; sadece `"type":"module"` ve `"scripts":{"test:static":"node --test tests/static","test:deploy-gate":"node --test tests/deploy-gate"}`, bağımlılık yok)
 
 **Interfaces:**
 - Produces: `npm run test:static` (Task 2 ve 3 de bu klasöre test ekler)
@@ -54,13 +68,19 @@ test('no unconditional receipt promise (DE+TR)', () => {
   assert.match(html, /Eintragung geplant 2027/);
   assert.match(html, /erst nach Anerkennung durch das Finanzamt/);
 });
+test('no transport or data-protection takeover promise (DE+TR)', () => {
+  assert.doesNotMatch(html, /Transport[^"]*übernimmt WeiterWert/);
+  assert.doesNotMatch(html, /du übergibst nur die Geräte|Sie übergeben nur die Geräte/);
+  // TR karşılıkları: uygulayıcı önce translations.tr.path3Desc/corpDesc'in bugünkü metnini okur,
+  // taşıma/veri koruma üstlenme vaadinin TR ifadesini buraya doesNotMatch olarak ekler.
+});
 test('legal status stated', () => assert.match(html, /nicht eingetragener Verein in Gründung/));
 test('no LOGO placeholder slots', () => assert.doesNotMatch(html, /class="partner-slot"/));
 ```
 - [ ] **Step 2:** `npm run test:static` → FAIL.
 - [ ] **Step 3: Metinleri değiştir**
-  - `receiptDesc` DE: „Spendenbescheinigungen (Zuwendungsbestätigungen) können wir erst nach Eintragung und Anerkennung durch das Finanzamt ausstellen. Eintragung geplant 2027 – Zuwendungsbestätigungen erst nach Anerkennung durch das Finanzamt." TR: „Bağış makbuzu (Zuwendungsbestätigung) ancak dernek tescili ve Finanzamt onayından sonra verilebilir. Tescil 2027'de planlanıyor."
-  - `path3Desc` / `corpDesc` (DE HTML + `de` + `tr`): „…Datenschutz, Transport und Inventar übernimmt WeiterWert…" Spendenbeleg kısmı çıkarılır.
+  - `receiptDesc` DE: „Eintragung geplant 2027 – Zuwendungsbestätigungen erst nach Anerkennung durch das Finanzamt." TR: „Tescil 2027'de planlanıyor. Bağış makbuzu ancak Finanzamt onayından sonra verilebilir." (Makbuz sadece Finanzamt onayına bağlanır; tescile bağlayan hukuki iddia yok.)
+  - `path3Desc` / `corpDesc` (DE HTML + `de` + `tr`): Taşıma, Spendenbeleg ve veri korumayı „üstlenme" vaadi çıkarılır (Abholung „demnächst"; yedekleme ve MDM/Autopilot kaldırma bağışçıda). DE önerisi: „Auch größere Mengen nehmen wir gern entgegen. Wir stimmen die Übergabe mit Ihnen ab, prüfen jedes Gerät und löschen die Daten nach einem dokumentierten Verfahren." (`path3Desc` du-Form.) TR karşılığı aynı anlamda.
   - `footerCopyright` DE: „© WeiterWert – nicht eingetragener Verein in Gründung"; TR: „© WeiterWert – kuruluş aşamasında, tescilsiz dernek (n.e.V.)".
   - „Unsere Unterstützer" bloğundan `.partner-row` ve `partnerNote` çıkarılır. Başlık + `partnerP` kalır, metin: „Sobald uns Organisationen unterstützen, nennen wir sie hier – mit ihrer Zustimmung." (TR karşılığı ile.) Kullanılmayan `.partner-*` CSS'i silinir.
 - [ ] **Step 4:** `npm run test:static` → PASS. Tarayıcıda DE ve TR görsel kontrol.
@@ -93,14 +113,17 @@ test('no LOGO placeholder slots', () => assert.doesNotMatch(html, /class="partne
 test('footer links to legal pages', () => { assert.match(html, /href="impressum.html"/); assert.match(html, /href="datenschutz.html"/); });
 test('impressum complete', () => { const s = read('impressum.html'); assert.match(s, /nicht eingetragener Verein in Gründung/); assert.match(s, /Verantwortlich/); });
 test('datenschutz names processors', () => { const s = read('datenschutz.html'); for (const n of ['Vercel','Google (Gmail)','Art. 6 Abs. 1','Beschwerde']) assert.ok(s.includes(n), n); });
-test('no unfilled placeholders (deploy gate)', () => { for (const f of ['impressum.html','datenschutz.html']) assert.doesNotMatch(read(f), /⟦FEHLT/); });
+```
+Ayrı dosya `tests/deploy-gate/placeholders.test.mjs` (`npm run test:deploy-gate`; Fatih'in bilgileri gelene kadar bilerek kırmızı, `test:static` yeşil kalır):
+```js
+test('no unfilled placeholders', () => { for (const f of ['impressum.html','datenschutz.html']) assert.doesNotMatch(read(f), /⟦FEHLT/); });
 ```
 - [ ] **Step 2:** FAIL.
 - [ ] **Step 3: Impressum** – Başlıklar: „Angaben gemäß § 5 DDG", ad (n.e.V. in Gründung), „Vertreten durch" (Fatih'in verdiği kişiler), Anschrift, Kontakt (E-Mail `weiterwert@gmail.com` + Telefon), „Verantwortlich für den Inhalt", kısa „Haftung für Links". USt-ID/Register satırı **yok**.
 - [ ] **Step 4: Datenschutzerklärung (kısa sürüm)** – Bölümler: Verantwortlicher; Hosting (Vercel Inc., Server-Logfiles, Art. 6 Abs. 1 lit. f, Drittlandübermittlung/DPF); Kontakt per E-Mail (Google (Gmail), Art. 6 Abs. 1 lit. b/f); keine Cookies/kein Tracking; lokal gespeicherte Sprachauswahl (localStorage, § 25 Abs. 2 TDDDG); Speicherdauer; Betroffenenrechte (Art. 15–21) + Beschwerderecht bei Aufsichtsbehörde; Stand-Datum. Repo'daki dosyanın başına HTML yorum: `<!-- Entwurf – vor Produktivbetrieb rechtlich prüfen lassen -->`.
-- [ ] **Step 5:** Fatih'in bilgileri gelene kadar sadece son test FAIL; diğerleri PASS.
+- [ ] **Step 5:** `npm run test:static` PASS. `npm run test:deploy-gate` Fatih'in bilgileri gelene kadar FAIL.
 - [ ] **Step 6: Commit** – `"Add Impressum and privacy policy pages"`
-- [ ] **Step 7: Deploy (sadece Fatih onayıyla)** – Tüm testler PASS olduktan sonra Fatih'e sorulur. Mevcut Vercel projesi `techverband`.
+- [ ] **Step 7: Deploy (sadece Fatih onayıyla)** – `test:static` ve `test:deploy-gate` PASS olduktan sonra Fatih'e sorulur. Mevcut Vercel projesi `techverband`.
 
 ---
 
@@ -115,7 +138,7 @@ test('no unfilled placeholders (deploy gate)', () => { for (const f of ['impress
 - Modify: `.gitignore` (`platform/.env*.local`, `platform/.next`, `platform/node_modules`)
 
 **Interfaces:**
-- Produces: `npm test` (Vitest), `npm run e2e` (Playwright, `webServer: npm run dev`), CSS değişkenleri `--brand-navy`, `--ink`, `--surface` vb. (`index.html` ile aynı isimler)
+- Produces: `npm test` (Vitest), `npm run e2e` (Playwright). `NEXT_PUBLIC_*` build anında gömüldüğü için Playwright'ta **iki proje + iki `webServer`**: `test-env` (port 3100, `NEXT_PUBLIC_APP_ENV=test`, test Basic Auth bilgileri) ve `prod-env` (port 3200, `NEXT_PUBLIC_APP_ENV=production`). Her biri `next build && next start -p <port>` ile, ayrı `distDir` kullanarak çalışır. CSS değişkenleri `--brand-navy`, `--ink`, `--surface` vb. (`index.html` ile aynı isimler)
 
 - [ ] **Step 1:** Scaffold + `npm i -D vitest @vitejs/plugin-react @playwright/test` + `npx playwright install chromium`.
 - [ ] **Step 2: Smoke test** `platform/e2e/smoke.spec.ts`: `/` 200 döner, `<html lang="de">`.
@@ -179,7 +202,7 @@ expect(checkBasicAuth('Basic ' + btoa(':'), '', '')).toBe(false);
   - `proxy.ts`: `getAppEnv()==='test'` ise her istekte (`/_next/static` ve `/fonts` hariç) `checkBasicAuth` çalışır. Başarısızsa `401` + `WWW-Authenticate: Basic realm="WeiterWert Test"`. Her yanıta `X-Robots-Tag: noindex, nofollow` eklenir.
   - `robots.ts`: test ortamında `disallow: '/'`.
   - `TestBanner`: test ortamında layout'un en üstünde, kapatılamaz, `role="status"`, metin „Testumgebung – keine echten Spenden".
-- [ ] **Step 4: E2E** (`APP_ENV=test`, test şifreleri `.env.test`'ten): şifresiz `/` → 401; şifreli → 200, bant görünür, `X-Robots-Tag` başlığı var.
+- [ ] **Step 4: E2E** (`test-env` projesi, `NEXT_PUBLIC_APP_ENV=test`, test şifreleri `.env.test`'ten): şifresiz `/` → 401; şifreli → 200, bant görünür, `X-Robots-Tag` başlığı var.
 - [ ] **Step 5:** `npm test && npm run e2e` → PASS.
 - [ ] **Step 6: Commit** – `"Protect test environment with basic auth and noindex"`
 
@@ -236,8 +259,8 @@ Rotalar (`title` Almanca):
 
 - [ ] **Step 1: Failing tests**
   - unit: `SITEMAP` 17 rota içeriyor, path'ler benzersiz.
-  - e2e (test env): her `SITEMAP` path'i 200 döner ve `<h1>` = `title`; `/admin` „Entwurf – nur Testumgebung" rozeti gösterir; `/geraetepartnerschaft` „demnächst" rozeti gösterir.
-  - e2e (production env): `/admin` 404.
+  - e2e (`test-env` projesi): her `SITEMAP` path'i 200 döner ve `<h1>` = `title`; `/admin` „Entwurf – nur Testumgebung" rozeti gösterir; `/geraetepartnerschaft` „demnächst" rozeti gösterir.
+  - e2e (`prod-env` projesi): `/admin` 404.
   - e2e: cookie `lang=tr` ile `/spenden` → „Das Spendenformular ist nur auf Deutsch verfügbar." görünür, içerik Almanca.
 - [ ] **Step 2:** FAIL.
 - [ ] **Step 3:** Uygula. `germanOnly` sayfalar TR'de üstte notla Almanca render edilir; `hide` görünürlüğü olan feature sayfaları `notFound()` çağırır.
