@@ -1,0 +1,9 @@
+{
+  "name": "weiterwert-site",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test:static": "node --test \"tests/static/*.test.mjs\"",
+    "test:deploy-gate": "node --test \"tests/deploy-gate/*.test.mjs\""
+  }
+}

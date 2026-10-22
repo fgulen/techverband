@@ -1,0 +1,7 @@
+# Live site (techverband project): publish only the static site.
+# Everything else (docs, tests, platform/, package.json, local env files) stays private.
+/*
+!/index.html
+!/impressum.html
+!/datenschutz.html
+!/assets
