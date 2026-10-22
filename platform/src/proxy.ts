@@ -5,11 +5,14 @@ import { requiresAuth } from '@/lib/auth-required';
 
 export function proxy(request: NextRequest) {
   const protectedSite = requiresAuth({
-    appEnv: getAppEnv(),
     vercelEnv: process.env.VERCEL_ENV,
     basicAuthUser: process.env.BASIC_AUTH_USER,
   });
-  if (!protectedSite) return NextResponse.next();
+  if (!protectedSite) {
+    const res = NextResponse.next();
+    if (getAppEnv() === 'test') res.headers.set('X-Robots-Tag', 'noindex, nofollow');
+    return res;
+  }
 
   const ok = checkBasicAuth(
     request.headers.get('authorization'),
