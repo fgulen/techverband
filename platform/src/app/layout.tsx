@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { SiteHeader } from "@/components/SiteHeader";
 import { SiteFooter } from "@/components/SiteFooter";
+import { TestBanner } from "@/components/TestBanner";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -13,6 +14,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html lang="de">
       <body>
+        <TestBanner />
         <SiteHeader />
         <main><div className="container">{children}</div></main>
         <SiteFooter />
