@@ -4,7 +4,7 @@ import { SiteFooter } from "@/components/SiteFooter";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: { default: "WeiterWert", template: "%s – WeiterWert" },
+  title: { default: "WeiterWert – Technik weitergeben. Chancen eröffnen.", template: "%s – WeiterWert" },
   description: "Gebrauchte Laptops und Tablets spenden – für Bildung, gegen Elektroschrott.",
   icons: { icon: [{ url: "/logo-mark.svg", type: "image/svg+xml" }, { url: "/favicon.png" }], apple: "/apple-touch-icon.png" },
 };

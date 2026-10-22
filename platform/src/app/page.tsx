@@ -3,7 +3,7 @@ import Link from "next/link";
 export default function Home() {
   return (
     <>
-      <h1>Wir schenken Technologie neues Leben und bringen Bildung zu allen.</h1>
+      <h1>Technik weitergeben. Chancen eröffnen.</h1>
       <p className="lead">
         Gebrauchte Laptops und Tablets werden geprüft, sicher gelöscht und an Schüler:innen weitergegeben.
         Prüfen Sie in wenigen Schritten, ob Ihr Gerät passt.

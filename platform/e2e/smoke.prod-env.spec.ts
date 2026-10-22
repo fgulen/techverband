@@ -5,4 +5,5 @@ test('home page renders in German', async ({ page }) => {
   expect(res?.status()).toBe(200);
   await expect(page.locator('html')).toHaveAttribute('lang', 'de');
   await expect(page).toHaveTitle(/WeiterWert/);
+  await expect(page.getByRole('heading', { level: 1 })).toHaveText('Technik weitergeben. Chancen eröffnen.');
 });
