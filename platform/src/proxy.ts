@@ -1,9 +1,15 @@
 import { NextResponse, type NextRequest } from 'next/server';
 import { getAppEnv } from '@/lib/env';
 import { checkBasicAuth } from '@/lib/basic-auth';
+import { requiresAuth } from '@/lib/auth-required';
 
 export function proxy(request: NextRequest) {
-  if (getAppEnv() !== 'test') return NextResponse.next();
+  const protectedSite = requiresAuth({
+    appEnv: getAppEnv(),
+    vercelEnv: process.env.VERCEL_ENV,
+    basicAuthUser: process.env.BASIC_AUTH_USER,
+  });
+  if (!protectedSite) return NextResponse.next();
 
   const ok = checkBasicAuth(
     request.headers.get('authorization'),
