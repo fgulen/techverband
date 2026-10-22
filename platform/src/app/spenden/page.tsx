@@ -5,6 +5,7 @@ import { FEATURES, type FeatureKey } from '@/lib/features';
 import { gatePage, isUsable } from '@/lib/page-gate';
 import { pageTitle } from '@/lib/sitemap';
 import styles from './spenden.module.css';
+import { GeraeteCheck } from './GeraeteCheck';
 
 const TITLE = pageTitle('/spenden');
 export const metadata: Metadata = { title: TITLE };
@@ -31,6 +32,10 @@ export default function SpendenPage() {
         Ohne Konto, in wenigen Minuten. Bevor Sie etwas verschicken, sehen Sie, ob Ihr Gerät voraussichtlich passt.
       </p>
       <FeatureGate feature="spenden">
+        <GeraeteCheck />
+
+        <h2>So geht es weiter</h2>
+        <p>Kontaktdaten, Übergabe und Absenden folgen in Kürze. Bis dahin schreiben Sie uns gern an <a href="mailto:weiterwert@gmail.com">weiterwert@gmail.com</a>.</p>
         <ol className={styles.steps} aria-label="Ablauf der Spende">
           {SCHRITTE.map(([titel, text]) => (
             <li key={titel} className={styles.step}>

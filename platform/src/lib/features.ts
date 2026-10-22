@@ -10,7 +10,7 @@ export type FeatureKey =
 
 // Faz 1: nothing works yet, so everything is "demnaechst"; later phases switch features to "aktiv".
 export const FEATURES: Record<FeatureKey, { status: FeatureStatus; label: string }> = {
-  spenden: { status: 'demnaechst', label: 'Laptop oder Tablet spenden' },
+  spenden: { status: 'aktiv', label: 'Laptop oder Tablet spenden' },
   ocr: { status: 'demnaechst', label: 'Typenschild fotografieren' },
   uebergabeAbsprache: { status: 'demnaechst', label: 'Übergabe nach Absprache' },
   abholung: { status: 'demnaechst', label: 'Abholung' },

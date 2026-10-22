@@ -20,9 +20,12 @@ describe('FEATURES (Faz 1 starting values)', () => {
   it('keeps AI, admin and receipts hidden', () => {
     for (const k of ['kiVorpruefung', 'admin', 'spendenbeleg'] as const) expect(FEATURES[k].status).toBe('verborgen');
   });
+  it('has the donation pre-check live', () => {
+    expect(FEATURES.spenden.status).toBe('aktiv');
+  });
   it('marks everything else as upcoming', () => {
-    const rest = Object.entries(FEATURES).filter(([k]) => !['kiVorpruefung', 'admin', 'spendenbeleg'].includes(k));
-    expect(rest.length).toBe(12);
+    const rest = Object.entries(FEATURES).filter(([k]) => !['kiVorpruefung', 'admin', 'spendenbeleg', 'spenden'].includes(k));
+    expect(rest.length).toBe(11);
     for (const [, f] of rest) expect(f.status).toBe('demnaechst');
   });
 });
