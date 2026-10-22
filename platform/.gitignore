@@ -45,3 +45,4 @@ next-env.d.ts
 /.next-prod/
 /test-results/
 /playwright-report/
+!.env.example
