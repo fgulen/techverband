@@ -87,16 +87,20 @@
     gap:16px;
   }
   .brand{
-    display:flex;align-items:center;gap:10px;
-    font-weight:800;font-size:1.25rem;
+    display:flex;align-items:center;gap:11px;
+    font-weight:800;font-size:1.3rem;
     text-decoration:none;color:var(--brand-navy);
     white-space:nowrap;
   }
   .brand-name-accent{color:var(--brand-lime);}
   .brand-mark{
-    width:56px;height:56px;
+    width:62px;height:62px;
     object-fit:contain;
     flex-shrink:0;
+  }
+  @media (min-width:560px){
+    .brand{font-size:1.45rem;gap:12px;}
+    .brand-mark{width:72px;height:72px;}
   }
   .nav-links{
     display:none;
@@ -484,7 +488,7 @@
 <header class="nav">
   <div class="nav-inner">
     <a class="brand" href="#top">
-      <img class="brand-mark" src="assets/logo-mark.svg" alt="" width="56" height="56">
+      <img class="brand-mark" src="assets/logo-mark.svg" alt="" width="72" height="72">
       <span>Weiter<span class="brand-name-accent">Wert</span></span>
     </a>
     <nav class="nav-links" data-i18n-aria="navAria" aria-label="Hauptmenü">
