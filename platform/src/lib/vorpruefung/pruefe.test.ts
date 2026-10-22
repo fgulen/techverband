@@ -55,4 +55,24 @@ describe('pruefe (Annahmekriterien v0.1)', () => {
       expect(pruefe(e).gruende.length).toBeGreaterThan(0);
     }
   });
+
+  it('never rates unknown battery, display or locks as suitable', () => {
+    for (const patch of [{ akku: 'unbekannt' }, { display: 'unbekannt' }, { sperren: 'unbekannt' }] as Partial<GeraetEingabe>[]) {
+      expect(pruefe({ ...gut, ...patch }).ergebnis, JSON.stringify(patch)).not.toBe('geeignet');
+    }
+  });
+
+  it('mentions Windows 11 only for Windows/Linux laptops', () => {
+    for (const typ of ['ipad', 'android', 'macbook'] as const) {
+      expect(pruefe({ ...gut, typ, alter: '7-9' }).gruende.join(' ')).not.toMatch(/Windows/);
+    }
+  });
+
+  it('checks the Chromebook update end from 4 years on and for 10+', () => {
+    for (const alter of ['4-6', '10+'] as const) {
+      const r = pruefe({ ...gut, typ: 'chromebook', alter });
+      expect(r.ergebnis, alter).toBe('manuell');
+      expect(r.gruende.join(' '), alter).toMatch(/Update-Ende/);
+    }
+  });
 });

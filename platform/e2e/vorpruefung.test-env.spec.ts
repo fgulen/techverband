@@ -42,3 +42,9 @@ test('several devices can be collected in one request', async ({ page }) => {
   await expect(list).toContainText('Lenovo');
   await expect(list).toContainText('Apple');
 });
+
+test('a device rated not suitable cannot be added to the donation', async ({ page }) => {
+  await page.goto('/spenden');
+  await choose(page, 'Akku', 'Gebläht oder beschädigt');
+  await expect(page.getByRole('button', { name: 'Gerät zur Liste hinzufügen' })).toBeDisabled();
+});

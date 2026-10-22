@@ -84,6 +84,7 @@ export function GeraeteCheck() {
 
       <form className={styles.form} onSubmit={(ev) => {
         ev.preventDefault();
+        if (r.ergebnis === 'nichtGeeignet') return;
         setListe((l) => [...l, { eingabe: geraet, r }]);
         setGeraet(LEER);
       }}>
@@ -114,7 +115,7 @@ export function GeraeteCheck() {
         ))}
 
         <Ergebnisbox r={r} />
-        <button type="submit" className="btn">Gerät zur Liste hinzufügen</button>
+        <button type="submit" className="btn" disabled={r.ergebnis === 'nichtGeeignet'}>Gerät zur Liste hinzufügen</button>
       </form>
     </div>
   );
