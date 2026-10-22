@@ -381,22 +381,6 @@
   .role-card h3{font-size:1rem;margin-bottom:4px;}
   .role-card p{color:var(--muted);font-size:0.9rem;}
 
-  .partner-row{
-    display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin-top:28px;
-  }
-  @media (min-width:760px){
-    .partner-row{grid-template-columns:repeat(4,1fr);}
-  }
-  .partner-slot{
-    height:88px;
-    background:var(--surface);
-    border:1px dashed var(--line-strong);
-    border-radius:14px;
-    display:flex;align-items:center;justify-content:center;
-    color:var(--muted);
-    font-size:0.78rem;font-weight:700;letter-spacing:0.14em;
-  }
-
   .info-grid{
     display:grid;grid-template-columns:1fr;gap:20px;margin-top:40px;
   }
@@ -614,7 +598,7 @@
           </div>
           <span class="path-label" data-i18n="path3Label">Für Unternehmen</span>
           <h3 data-i18n="path3Title">Geräte im Bestand spenden</h3>
-          <p data-i18n="path3Desc">Auch größere Mengen nehmen wir entgegen: Datenschutz, Transport, Inventar und Spendenbeleg übernimmt WeiterWert — du übergibst nur die Geräte.</p>
+          <p data-i18n="path3Desc">Auch größere Mengen nehmen wir gern entgegen. Wir stimmen die Übergabe mit dir ab, prüfen jedes Gerät und löschen die Daten nach einem dokumentierten Verfahren.</p>
           <a href="mailto:weiterwert@gmail.com?subject=Kooperation%20f%C3%BCr%20Unternehmen" class="btn btn-primary btn-block" data-i18n="path3Btn" data-i18n-subject="mailCorpSubject">Anfrage senden</a>
         </div>
 
@@ -703,7 +687,7 @@
         </div>
         <div class="callout-body">
           <h3 data-i18n="corpTitle">Für Unternehmen und Organisationen</h3>
-          <p data-i18n="corpDesc">Wir nehmen auch größere Spendenmengen entgegen. Datenschutz, Transport, Inventar und Spendenbeleg übernimmt WeiterWert — Sie übergeben nur die Geräte.</p>
+          <p data-i18n="corpDesc">Auch größere Spendenmengen nehmen wir gern entgegen. Wir stimmen die Übergabe mit Ihnen ab, prüfen jedes Gerät und löschen die Daten nach einem dokumentierten Verfahren.</p>
         </div>
         <a href="mailto:weiterwert@gmail.com?subject=Kooperation%20f%C3%BCr%20Unternehmen" class="btn btn-primary" data-i18n="corpBtn" data-i18n-subject="mailCorpSubject">Kooperation anfragen</a>
       </div>
@@ -774,7 +758,7 @@
             </svg>
           </div>
           <h3 data-i18n="receiptTitle">Spendenbeleg</h3>
-          <p data-i18n="receiptDesc">Für gespendete Geräte und geleistete Ehrenamtsstunden stellen wir auf Wunsch eine Bescheinigung aus. Angaben zu Rechtsform und Registereintrag veröffentlichen wir an eigener Stelle.</p>
+          <p data-i18n="receiptDesc">Eintragung geplant 2027 – Zuwendungsbestätigungen erst nach Anerkennung durch das Finanzamt.</p>
         </div>
       </div>
 
@@ -817,15 +801,8 @@
       <div style="margin-top:40px;">
         <div class="section-head">
           <h2 style="font-size:1.35rem;margin-bottom:10px;" data-i18n="partnerTitle">Unsere Unterstützer</h2>
-          <p data-i18n="partnerP">Logos unserer ersten Unterstützer veröffentlichen wir hier.</p>
+          <p data-i18n="partnerP">Sobald uns Organisationen unterstützen, nennen wir sie hier – mit ihrer Zustimmung.</p>
         </div>
-        <div class="partner-row">
-          <div class="partner-slot">LOGO</div>
-          <div class="partner-slot">LOGO</div>
-          <div class="partner-slot">LOGO</div>
-          <div class="partner-slot">LOGO</div>
-        </div>
-        <p class="note" style="margin-top:20px;"><span data-i18n="partnerNote">Platzhalter für Logos — wird mit den Marken unserer Unterstützer gefüllt.</span></p>
       </div>
     </div>
   </section>
@@ -898,7 +875,7 @@
       </div>
     </div>
     <div class="footer-bottom">
-      <span data-i18n="footerCopyright">© WeiterWert — Initiative für Technologie und Bildung</span>
+      <span data-i18n="footerCopyright">© WeiterWert – nicht eingetragener Verein in Gründung</span>
       <span data-i18n="footerLegalHint">Impressum und Datenschutz folgen.</span>
     </div>
   </div>
@@ -929,7 +906,7 @@
       path2Desc: "İhtiyacı olan bir okulu, öğrenciyi ya da topluluğu biliyor musun? Bize bildir, birlikte uygun cihazı bulalım.",
       path2Btn: "Talep Bildir",
       path3Label: "Kurumlar için", path3Title: "Stoktaki Cihazları Bağışla",
-      path3Desc: "Daha büyük miktarları da kabul ediyoruz: Veri güvenliği, taşıma, envanter ve bağış makbuzunu biz üstleniyoruz — sen sadece cihazları teslim edersin.",
+      path3Desc: "Daha büyük miktarları da memnuniyetle kabul ediyoruz. Teslimi seninle birlikte planlıyor, her cihazı kontrol ediyor ve verileri belgelenmiş bir yöntemle siliyoruz.",
       path3Btn: "İş Birliği Sor",
       path4Label: "Aktif olmak için", path4Title: "Gönüllü Olarak Taşı",
       path4Desc: "Bağışlanan cihazları toplama noktalarından okullara taşımak için aracın ya da zamanınla destek ol.",
@@ -953,7 +930,7 @@
       step5Title: "Teslim Et",
       step5Desc: "Gönüllü ağımız aracılığıyla cihazları ihtiyaç sahibi öğrenci ve eğitimcilere teslim ediyoruz.",
       corpTitle: "Şirketler ve kurumlar için",
-      corpDesc: "Daha büyük bağış miktarlarını da kabul ediyoruz. Veri güvenliği, taşıma, envanter ve bağış makbuzunu WeiterWert üstleniyor — sen sadece cihazları teslim edersin.",
+      corpDesc: "Daha büyük bağış miktarlarını da memnuniyetle kabul ediyoruz. Teslimi sizinle birlikte planlıyor, her cihazı kontrol ediyor ve verileri belgelenmiş bir yöntemle siliyoruz.",
       corpBtn: "İş Birliği Sor",
 
       trustEyebrow: "Güven",
@@ -971,13 +948,12 @@
       volTitle: "Gönüllülerimiz",
       volP: "Her cihaz bir ekiple ulaşır. Ağın üç temel rolü var — teknik, lojistik ve koordinasyon. Zamanı olan herkes bu ağın parçasıdır.",
       receiptTitle: "Bağış Makbuzu",
-      receiptDesc: "Bağışlanan cihazlar ve harcanan gönüllü saatleri için talep üzerine belge düzenliyoruz. Hukuki yapı ve resmî kayıt bilgilerini ayrı bir alanda yayınlayacağız.",
+      receiptDesc: "Tescil 2027'de planlanıyor. Bağış makbuzu ancak Finanzamt onayından sonra verilebilir.",
       vol1Name: "Teknik", vol1Role: "Cihazları kontrol eder, arızaları giderir ve verileri güvenle siler.",
       vol2Name: "Lojistik", vol2Role: "Cihazları toplama noktalarından okullara ve ihtiyaç sahiplerine taşır.",
       vol3Name: "Koordinasyon", vol3Role: "Bağışçıları, ihtiyaç sahiplerini ve gönüllüleri aynı plan altında buluşturur.",
       partnerTitle: "Destekçilerimiz",
-      partnerP: "İlk destekçilerimizin logolarını burada yayınlayacağız.",
-      partnerNote: "Logo yerleştirme alanı — destekçilerimizin markalarıyla doldurulacak.",
+      partnerP: "Bizi destekleyen kurumları, onayları alınarak burada paylaşacağız.",
 
       approachEyebrow: "Yaklaşımımız", approachH2: "Küçük başlıyoruz, şeffaf ilerliyoruz",
       approachP: "Yeni kurulan bir girişim olarak büyük vaatler yerine somut, doğrulanabilir adımlarla ilerlemeyi tercih ediyoruz.",
@@ -988,7 +964,7 @@
 
       footerMeta: "Teknoloji ve eğitim arasında köprü kuran topluluk ağı",
       footerNavigate: "Gezinme", footerTrust: "Güven", footerContact: "İletişim",
-      footerCopyright: "© WeiterWert — Teknoloji ve eğitim için girişim",
+      footerCopyright: "© WeiterWert – kuruluş aşamasında, tescilsiz dernek (n.e.V.)",
       footerLegalHint: "İmza ve gizlilik metinleri hazırlanıyor.",
       langAria: "Dil seçimi", navAria: "Ana menü"
     },
@@ -1014,7 +990,7 @@
       path2Desc: "Kennst du eine Schule, eine Schülerin, einen Schüler oder eine Gemeinschaft mit Bedarf? Schlag uns dein Projekt vor — wir suchen das passende Gerät.",
       path2Btn: "Gerät beantragen",
       path3Label: "Für Unternehmen", path3Title: "Geräte im Bestand spenden",
-      path3Desc: "Auch größere Mengen nehmen wir entgegen: Datenschutz, Transport, Inventar und Spendenbeleg übernimmt WeiterWert — du übergibst nur die Geräte.",
+      path3Desc: "Auch größere Mengen nehmen wir gern entgegen. Wir stimmen die Übergabe mit dir ab, prüfen jedes Gerät und löschen die Daten nach einem dokumentierten Verfahren.",
       path3Btn: "Anfrage senden",
       path4Label: "Für Aktive", path4Title: "Freiwillig transportieren",
       path4Desc: "Unterstütze uns dabei, gespendete Geräte zu unseren Sammelstellen und weiter zu den Schulen zu bringen — mit Fahrzeug oder Zeit.",
@@ -1038,7 +1014,7 @@
       step5Title: "Ausliefern",
       step5Desc: "Über unser Freiwilligennetzwerk übergeben wir die Geräte an Schüler:innen und Lehrkräfte, die sie benötigen.",
       corpTitle: "Für Unternehmen und Organisationen",
-      corpDesc: "Wir nehmen auch größere Spendenmengen entgegen. Datenschutz, Transport, Inventar und Spendenbeleg übernimmt WeiterWert — Sie übergeben nur die Geräte.",
+      corpDesc: "Auch größere Spendenmengen nehmen wir gern entgegen. Wir stimmen die Übergabe mit Ihnen ab, prüfen jedes Gerät und löschen die Daten nach einem dokumentierten Verfahren.",
       corpBtn: "Kooperation anfragen",
 
       trustEyebrow: "Vertrauen",
@@ -1056,13 +1032,12 @@
       volTitle: "Unsere Freiwilligen",
       volP: "Jedes Gerät erreicht jemanden durch ein Team. Das Netzwerk hat drei Kernrollen — technisch, logistisch und koordinierend. Wer Zeit hat, gehört dazu.",
       receiptTitle: "Spendenbeleg",
-      receiptDesc: "Für gespendete Geräte und geleistete Ehrenamtsstunden stellen wir auf Wunsch eine Bescheinigung aus. Angaben zu Rechtsform und Registereintrag veröffentlichen wir an eigener Stelle.",
+      receiptDesc: "Eintragung geplant 2027 – Zuwendungsbestätigungen erst nach Anerkennung durch das Finanzamt.",
       vol1Name: "Technik", vol1Role: "Geräte prüfen, Fehler beheben und Daten sicher löschen.",
       vol2Name: "Logistik", vol2Role: "Geräte von Sammelstellen zu Schulen und zu den Menschen bringen, die sie brauchen.",
       vol3Name: "Koordination", vol3Role: "Bringt Spender:innen, Bedürftige und Freiwillige in einem Plan zusammen.",
       partnerTitle: "Unsere Unterstützer",
-      partnerP: "Logos unserer ersten Unterstützer veröffentlichen wir hier.",
-      partnerNote: "Platzhalter für Logos — wird mit den Marken unserer Unterstützer gefüllt.",
+      partnerP: "Sobald uns Organisationen unterstützen, nennen wir sie hier – mit ihrer Zustimmung.",
 
       approachEyebrow: "Unser Ansatz", approachH2: "Wir starten klein und bleiben transparent",
       approachP: "Als junge Initiative setzen wir auf konkrete, nachprüfbare Schritte statt große Versprechen.",
@@ -1073,7 +1048,7 @@
 
       footerMeta: "Ein Gemeinschaftsnetzwerk, das Technologie und Bildung verbindet",
       footerNavigate: "Navigation", footerTrust: "Vertrauen", footerContact: "Kontakt",
-      footerCopyright: "© WeiterWert — Initiative für Technologie und Bildung",
+      footerCopyright: "© WeiterWert – nicht eingetragener Verein in Gründung",
       footerLegalHint: "Impressum und Datenschutz folgen.",
       langAria: "Sprachauswahl", navAria: "Hauptmenü"
     }
