@@ -1,7 +1,7 @@
 # Live site (techverband project): publish only the static site.
 # Everything else (docs, tests, platform/, package.json, local env files) stays private.
+# Legal pages are added here (!/impressum.html, !/datenschutz.html) only once they have no placeholders;
+# tests/static/legal-pages.test.mjs enforces this.
 /*
 !/index.html
-!/impressum.html
-!/datenschutz.html
 !/assets

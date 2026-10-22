@@ -3,12 +3,27 @@ import assert from 'node:assert/strict';
 import { readFileSync, existsSync } from 'node:fs';
 
 const read = f => readFileSync(new URL(`../../${f}`, import.meta.url), 'utf8');
+const LEGAL = ['impressum.html', 'datenschutz.html'];
+const complete = f => !/⟦FEHLT/.test(read(f));
 
-test('footer links to legal pages', () => {
+// Invariant: a legal page is linked and deployed only once it has no placeholders left.
+test('incomplete legal pages are neither linked nor deployed; complete ones are both', () => {
   const html = read('index.html');
-  assert.match(html, /href="impressum.html"/);
-  assert.match(html, /href="datenschutz.html"/);
-  assert.doesNotMatch(html, /Impressum und Datenschutz folgen/);
+  const ignore = read('.vercelignore').split(/\r?\n/).map(l => l.trim());
+  for (const f of LEGAL) {
+    const linked = html.includes(`href="${f}"`);
+    const deployed = ignore.includes(`!/${f}`);
+    if (complete(f)) {
+      assert.ok(linked && deployed, `${f} is complete: link it and deploy it`);
+    } else {
+      assert.ok(!linked && !deployed, `${f} still has placeholders: must not be linked or deployed`);
+    }
+  }
+});
+
+test('footer says legal pages follow while any is incomplete', () => {
+  const html = read('index.html');
+  if (!LEGAL.every(complete)) assert.match(html, /data-i18n="footerLegalHint"/);
 });
 
 test('impressum states legal form and responsibility', () => {
@@ -27,10 +42,14 @@ test('datenschutz names processors, bases and rights', () => {
   }
 });
 
+test('datenschutz does not claim an unverified processing agreement with Vercel', () => {
+  assert.doesNotMatch(read('datenschutz.html'), /Mit Vercel besteht ein Vertrag zur Auftragsverarbeitung/);
+});
+
 test('legal pages link back and to each other', () => {
-  for (const f of ['impressum.html', 'datenschutz.html']) {
+  for (const f of LEGAL) {
     const s = read(f);
-    assert.match(s, /href="index.html"|href="\/"/);
+    assert.match(s, /href="index.html"/);
     assert.match(s, /href="impressum.html"/);
     assert.match(s, /href="datenschutz.html"/);
     assert.doesNotMatch(s, /fonts\.(googleapis|gstatic)\.com/);

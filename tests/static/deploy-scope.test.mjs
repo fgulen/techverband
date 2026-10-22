@@ -10,7 +10,7 @@ test('.vercelignore exists', () => {
 
 test('live deploy allows only static site files', () => {
   const lines = readFileSync(path, 'utf8').split(/\r?\n/).map(l => l.trim()).filter(l => l && !l.startsWith('#'));
-  for (const l of ['/*', '!/index.html', '!/impressum.html', '!/datenschutz.html', '!/assets']) {
+  for (const l of ['/*', '!/index.html', '!/assets']) {
     assert.ok(lines.includes(l), `missing pattern ${l}`);
   }
   const allowed = lines.filter(l => l.startsWith('!'));
