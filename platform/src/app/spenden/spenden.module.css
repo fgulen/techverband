@@ -6,3 +6,5 @@
 .handover legend{font-weight:700;padding:0 6px;}
 .option{display:flex;align-items:center;gap:10px;flex-wrap:wrap;}
 .option input:disabled + span{color:var(--muted);}
+.more{border-top:1px solid var(--line);padding-top:14px;}
+.more summary{cursor:pointer;font-weight:600;color:var(--accent);}

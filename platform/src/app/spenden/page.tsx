@@ -32,32 +32,34 @@ export default function SpendenPage() {
         Ohne Konto, in wenigen Minuten. Bevor Sie etwas verschicken, sehen Sie, ob Ihr Gerät voraussichtlich passt.
       </p>
       <FeatureGate feature="spenden">
-        <GeraeteCheck />
+        <GeraeteCheck abschluss={
+          <details className={styles.more}>
+            <summary>Wie geht es nach der Vorprüfung weiter?</summary>
+            <p>Kontaktdaten, Übergabe und Absenden folgen in Kürze. Bis dahin schreiben Sie uns gern an <a href="mailto:weiterwert@gmail.com">weiterwert@gmail.com</a>.</p>
+            <ol className={styles.steps} aria-label="Ablauf der Spende">
+              {SCHRITTE.map(([titel, text]) => (
+                <li key={titel} className={styles.step}>
+                  <strong>{titel}</strong>
+                  <span>{text}</span>
+                </li>
+              ))}
+            </ol>
 
-        <h2>So geht es weiter</h2>
-        <p>Kontaktdaten, Übergabe und Absenden folgen in Kürze. Bis dahin schreiben Sie uns gern an <a href="mailto:weiterwert@gmail.com">weiterwert@gmail.com</a>.</p>
-        <ol className={styles.steps} aria-label="Ablauf der Spende">
-          {SCHRITTE.map(([titel, text]) => (
-            <li key={titel} className={styles.step}>
-              <strong>{titel}</strong>
-              <span>{text}</span>
-            </li>
-          ))}
-        </ol>
-
-        <fieldset className={styles.handover}>
-          <legend>Übergabe</legend>
-          {UEBERGABE.map((key) => {
-            const usable = isUsable(key);
-            return (
-              <label key={key} className={styles.option}>
-                <input type="radio" name="uebergabe" value={key} disabled={!usable} />
-                <span>{FEATURES[key].label}</span>
-                {!usable && <StatusBadge kind="demnaechst" />}
-              </label>
-            );
-          })}
-        </fieldset>
+            <fieldset className={styles.handover}>
+              <legend>Übergabe</legend>
+              {UEBERGABE.map((key) => {
+                const usable = isUsable(key);
+                return (
+                  <label key={key} className={styles.option}>
+                    <input type="radio" name="uebergabe" value={key} disabled={!usable} />
+                    <span>{FEATURES[key].label}</span>
+                    {!usable && <StatusBadge kind="demnaechst" />}
+                  </label>
+                );
+              })}
+            </fieldset>
+          </details>
+        } />
       </FeatureGate>
     </>
   );
