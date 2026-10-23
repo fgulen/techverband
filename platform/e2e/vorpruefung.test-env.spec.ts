@@ -5,23 +5,23 @@ async function choose(page: Page, group: string, option: string) {
 }
 
 async function weiter(page: Page) {
-  await page.getByRole('button', { name: 'Weiter' }).click();
+  await page.getByRole('button', { name: 'Weiter', exact: true }).click();
 }
 
 const status = (page: Page) => page.getByRole('status', { name: 'Vorprüfung' });
-const addButton = (page: Page) => page.getByRole('button', { name: 'Gerät zur Liste hinzufügen' });
+const zuKontakt = (page: Page) => page.getByRole('button', { name: 'Weiter zu Kontakt' });
 
-test('the stepper shows four steps and where the user is', async ({ page }) => {
+test('the stepper shows six steps and where the user is', async ({ page }) => {
   await page.goto('/spenden');
   const progress = page.getByRole('list', { name: 'Fortschritt' });
-  await expect(progress.getByRole('listitem')).toHaveCount(4);
-  await expect(page.getByText('Schritt 1 von 4')).toBeVisible();
+  await expect(progress.getByRole('listitem')).toHaveCount(6);
+  await expect(page.getByText('Schritt 1 von 6')).toBeVisible();
   await expect(progress.locator('[aria-current="step"]')).toContainText('Gerät');
   await weiter(page);
-  await expect(page.getByText('Schritt 2 von 4')).toBeVisible();
+  await expect(page.getByText('Schritt 2 von 6')).toBeVisible();
   await expect(progress.locator('[aria-current="step"]')).toContainText('Zustand');
   await page.getByRole('button', { name: 'Zurück' }).click();
-  await expect(page.getByText('Schritt 1 von 4')).toBeVisible();
+  await expect(page.getByText('Schritt 1 von 6')).toBeVisible();
 });
 
 test('a recent working laptop is provisionally suitable', async ({ page }) => {
@@ -38,7 +38,7 @@ test('a recent working laptop is provisionally suitable', async ({ page }) => {
   await choose(page, 'Konten und Sperren', 'Alles entfernt');
   await choose(page, 'Gehört das Gerät Ihnen?', 'Ja, es gehört mir');
   await weiter(page);
-  await expect(page.getByText('Schritt 4 von 4')).toBeVisible();
+  await expect(page.getByText('Schritt 4 von 6')).toBeVisible();
   await expect(status(page)).toContainText('Vorläufig geeignet');
 });
 
@@ -74,7 +74,7 @@ test('a swollen battery is flagged right away with a safety note', async ({ page
   await page.goto('/spenden');
   await weiter(page);
   await choose(page, 'Akku', 'Gebläht oder beschädigt');
-  await expect(page.getByText('Schritt 2 von 4')).toBeVisible();
+  await expect(page.getByText('Schritt 2 von 6')).toBeVisible();
   await expect(status(page)).toContainText('voraussichtlich nicht geeignet');
   await expect(status(page)).toContainText('nicht versenden');
 });
@@ -85,7 +85,7 @@ test('unknown answers ask for details but never block', async ({ page }) => {
   await weiter(page);
   await weiter(page);
   await expect(status(page)).toContainText('Weitere Angaben erforderlich');
-  await expect(addButton(page)).toBeEnabled();
+  await expect(zuKontakt(page)).toBeEnabled();
 });
 
 test('several devices can be collected in one request', async ({ page }) => {
@@ -95,8 +95,8 @@ test('several devices can be collected in one request', async ({ page }) => {
     await weiter(page);
     await weiter(page);
     await weiter(page);
-    await addButton(page).click();
-    await expect(page.getByText('Schritt 1 von 4')).toBeVisible();
+    await page.getByRole('button', { name: 'Weiteres Gerät erfassen' }).click();
+    await expect(page.getByText('Schritt 1 von 6')).toBeVisible();
   }
   const list = page.getByRole('list', { name: 'Ihre Geräte' });
   await expect(list.getByRole('listitem')).toHaveCount(2);
@@ -104,11 +104,11 @@ test('several devices can be collected in one request', async ({ page }) => {
   await expect(list).toContainText('Apple');
 });
 
-test('a device rated not suitable cannot be added to the donation', async ({ page }) => {
+test('a device rated not suitable alone cannot lead to the contact step', async ({ page }) => {
   await page.goto('/spenden');
   await weiter(page);
   await choose(page, 'Akku', 'Gebläht oder beschädigt');
   await weiter(page);
   await weiter(page);
-  await expect(addButton(page)).toBeDisabled();
+  await expect(zuKontakt(page)).toBeDisabled();
 });

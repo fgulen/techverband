@@ -5,6 +5,7 @@ import { FEATURES, type FeatureKey } from '@/lib/features';
 import { gatePage, isUsable } from '@/lib/page-gate';
 import { pageTitle } from '@/lib/sitemap';
 import styles from './spenden.module.css';
+import { absendenMoeglich } from '@/lib/absenden/speicher';
 import { GeraeteCheck } from './GeraeteCheck';
 
 const TITLE = pageTitle('/spenden');
@@ -32,7 +33,7 @@ export default function SpendenPage() {
         Ohne Konto, in wenigen Minuten. Bevor Sie etwas verschicken, sehen Sie, ob Ihr Gerät voraussichtlich passt.
       </p>
       <FeatureGate feature="spenden">
-        <GeraeteCheck abschluss={
+        {absendenMoeglich() ? <GeraeteCheck absenden /> : <GeraeteCheck abschluss={
           <details className={styles.more}>
             <summary>Wie geht es nach der Vorprüfung weiter?</summary>
             <p>Kontaktdaten, Übergabe und Absenden folgen in Kürze. Bis dahin schreiben Sie uns gern an <a href="mailto:weiterwert@gmail.com">weiterwert@gmail.com</a>.</p>
@@ -59,7 +60,7 @@ export default function SpendenPage() {
               })}
             </fieldset>
           </details>
-        } />
+        } />}
       </FeatureGate>
     </>
   );

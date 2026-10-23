@@ -44,7 +44,7 @@ test('impressum states legal form and responsibility', () => {
 
 test('datenschutz names processors, bases and rights', () => {
   const s = read('datenschutz.html');
-  for (const n of ['Vercel', 'Google (Gmail)', 'Art. 6 Abs. 1', 'Beschwerde', 'localStorage', '§ 25 Abs. 2 TDDDG', 'keine Cookies']) {
+  for (const n of ['Vercel', 'Supabase', 'Google (Gmail)', 'Art. 6 Abs. 1', 'Beschwerde', 'localStorage', '§ 25 Abs. 2 TDDDG', 'keine Cookies']) {
     assert.ok(s.includes(n), n);
   }
 });

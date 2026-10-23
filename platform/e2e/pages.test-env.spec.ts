@@ -19,17 +19,6 @@ test('/geraetepartnerschaft is marked as coming soon', async ({ page }) => {
   await expect(page.getByText('demnächst').first()).toBeVisible();
 });
 
-test('/spenden shows the 8 steps and four handover options on the result step, none selectable yet', async ({ page }) => {
-  await page.goto('/spenden');
-  for (let i = 0; i < 3; i++) await page.getByRole('button', { name: 'Weiter' }).click();
-  await page.getByText('Wie geht es nach der Vorprüfung weiter?').click();
-  await expect(page.getByRole('list', { name: 'Ablauf der Spende' }).getByRole('listitem')).toHaveCount(8);
-  const group = page.getByRole('group', { name: 'Übergabe' });
-  for (const label of ['Übergabe nach Absprache', 'Abholung', 'Paketversand', 'Sammelstelle']) {
-    await expect(group.getByLabel(label)).toBeDisabled();
-  }
-});
-
 test('/annahmekriterien shows draft criteria v0.1', async ({ page }) => {
   await page.goto('/annahmekriterien');
   await expect(page.getByText('Entwurf v0.1')).toBeVisible();
