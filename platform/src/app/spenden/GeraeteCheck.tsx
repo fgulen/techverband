@@ -31,7 +31,7 @@ const ART: Record<Art, { label: string; typen: Option<Geraetetyp>[]; marke: stri
     typen: [
       { value: 'ipad', label: 'iPad' }, { value: 'android', label: 'Android-Tablet' }, { value: 'unbekannt', label: WEISS_NICHT },
     ],
-    marke: 'z. B. Apple, Samsung, Lenovo', modell: 'z. B. iPad 9. Generation',
+    marke: 'z. B. Apple, Samsung', modell: 'z. B. iPad 9. Generation',
   },
 };
 
