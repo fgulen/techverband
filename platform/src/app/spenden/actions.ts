@@ -42,13 +42,16 @@ export async function sendeAnfrage(eingabe: unknown): Promise<Antwort> {
 
     // The request is saved; a failed notice is recorded in the outbox and must not fail the request.
     if (gespeichert.neu && gespeichert.outboxId && mailKonfiguriert()) {
+      let gesendet = false;
       try {
         await sendeMail(`Neue Spendenanfrage ${gespeichert.vorgangsnummer}`, mailText(gespeichert.vorgangsnummer, a.kontakt, geraete));
-        await speicher.markiere(gespeichert.outboxId, true, null);
+        gesendet = true;
       } catch (e) {
         console.error('Benachrichtigung fehlgeschlagen', gespeichert.vorgangsnummer, e);
         await speicher.markiere(gespeichert.outboxId, false, String(e).slice(0, 500)).catch(() => {});
       }
+      // Kept apart so a failed status update never marks a delivered mail as failed.
+      if (gesendet) await speicher.markiere(gespeichert.outboxId, true, null).catch((e) => console.error('Outbox-Status', e));
     }
     return { ok: true, vorgangsnummer: gespeichert.vorgangsnummer };
   } catch (e) {

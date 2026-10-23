@@ -43,6 +43,7 @@ describe('leseAnfrage', () => {
   it('requires both declarations and a valid idempotency key', () => {
     expect(leseAnfrage({ ...gut, erklaerungen: { eigentum: true, daten: false } }).ok).toBe(false);
     expect(leseAnfrage({ ...gut, idempotencyKey: 'abc' }).ok).toBe(false);
+    expect(leseAnfrage({ ...gut, idempotencyKey: '-'.repeat(36) }).ok).toBe(false);
   });
 
   it('rejects invalid contact data even if the browser check was skipped', () => {

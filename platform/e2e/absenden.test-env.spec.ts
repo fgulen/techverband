@@ -117,3 +117,39 @@ test('a lost connection keeps the answers and shows a retry message', async ({ p
   await page.getByRole('button', { name: 'Anfrage absenden' }).click();
   await expect(page.getByText(/^WW-\d{4}-\d{6}$/)).toBeVisible();
 });
+
+test('at most ten devices can be collected, and the page says so before sending', async ({ page }) => {
+  await page.goto('/spenden');
+  for (let i = 1; i <= 10; i++) {
+    await geraetErfassen(page, `Gerät ${i}`);
+    if (i < 10) await page.getByRole('button', { name: 'Weiteres Gerät erfassen' }).click();
+  }
+  await expect(page.getByText('Pro Anfrage sind höchstens 10 Geräte möglich.')).toBeVisible();
+  await expect(page.getByRole('button', { name: 'Weiteres Gerät erfassen' })).toBeDisabled();
+  await page.getByRole('button', { name: 'Weiter zu Kontakt' }).click();
+  await expect(page.getByRole('list', { name: 'Ihre Geräte' }).getByRole('listitem')).toHaveCount(10);
+});
+
+test('a corrected request after a lost response is saved as a new request', async ({ page }) => {
+  await bisAbsenden(page);
+  await erklaeren(page);
+  // The server saves, but the browser never sees the answer.
+  let verloren = '';
+  await page.route('**/spenden', async (route) => {
+    if (!route.request().headers()['next-action']) return route.continue();
+    const res = await route.fetch();
+    verloren = (await res.text()).match(/WW-\d{4}-\d{6}/)?.[0] ?? '';
+    await route.abort();
+  });
+  await page.getByRole('button', { name: 'Anfrage absenden' }).click();
+  await expect(page.getByRole('alert').filter({ hasText: 'Bitte versuchen Sie es erneut' })).toBeVisible();
+  expect(verloren).toMatch(/^WW-/);
+  await page.unroute('**/spenden');
+  // The donor fixes the e-mail address before trying again.
+  await page.getByRole('button', { name: 'Ändern' }).nth(1).click();
+  await page.getByLabel('E-Mail').fill('erika.korrigiert@example.de');
+  await weiter(page);
+  await page.getByRole('button', { name: 'Anfrage absenden' }).click();
+  const neu = await page.getByText(/^WW-\d{4}-\d{6}$/).textContent();
+  expect(neu).not.toBe(verloren);
+});

@@ -69,7 +69,7 @@ export function leseAnfrage(v: unknown): { ok: true; anfrage: Anfrage } | { ok: 
   const ungueltig = { ok: false as const, fehler: 'Die Angaben sind unvollständig. Bitte prüfen Sie das Formular.' };
   if (!v || typeof v !== 'object') return ungueltig;
   const o = v as Record<string, unknown>;
-  if (typeof o.idempotencyKey !== 'string' || !/^[0-9a-f-]{36}$/i.test(o.idempotencyKey)) return ungueltig;
+  if (typeof o.idempotencyKey !== 'string' || !/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(o.idempotencyKey)) return ungueltig;
   if (!Array.isArray(o.geraete) || o.geraete.length === 0) return { ok: false, fehler: 'Bitte erfassen Sie mindestens ein Gerät.' };
   if (o.geraete.length > MAX_GERAETE) return { ok: false, fehler: `Bitte senden Sie höchstens ${MAX_GERAETE} Geräte pro Anfrage.` };
   const geraete = o.geraete.map(geraet);

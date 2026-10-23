@@ -14,9 +14,15 @@ export function speicherKonfiguriert(): boolean {
 }
 
 async function rpc<T>(fn: string, body: unknown): Promise<T> {
+  const key = process.env.SUPABASE_SECRET_KEY!;
   const res = await fetch(`${process.env.NEXT_PUBLIC_SUPABASE_URL}/rest/v1/rpc/${fn}`, {
     method: 'POST',
-    headers: { apikey: process.env.SUPABASE_SECRET_KEY!, 'Content-Type': 'application/json' },
+    headers: {
+      apikey: key,
+      // A legacy service_role JWT also has to be sent as bearer token; new sb_secret_ keys must not be.
+      ...(key.startsWith('eyJ') ? { Authorization: `Bearer ${key}` } : {}),
+      'Content-Type': 'application/json',
+    },
     body: JSON.stringify(body),
     cache: 'no-store',
   });

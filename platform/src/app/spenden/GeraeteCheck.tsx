@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useId, useRef, useState, useTransition, type ReactNode } from 'react';
-import { ERKLAERUNGEN, LEERER_KONTAKT, pruefeKontakt, type Kontakt, type KontaktFehler } from '@/lib/absenden/anfrage';
+import { ERKLAERUNGEN, LEERER_KONTAKT, MAX_GERAETE, pruefeKontakt, type Kontakt, type KontaktFehler } from '@/lib/absenden/anfrage';
 import { pruefe } from '@/lib/vorpruefung/pruefe';
 import { ERGEBNIS_TEXT, type GeraetEingabe, type Geraetetyp, type Pruefergebnis } from '@/lib/vorpruefung/types';
 import { sendeAnfrage } from './actions';
@@ -81,6 +81,16 @@ const KONTAKT_FELDER: { key: keyof Kontakt; label: string; type: string; autoCom
   { key: 'organisation', label: 'Schule, Firma oder Organisation (optional)', type: 'text', autoComplete: 'organization', pflicht: false },
 ];
 
+// crypto.randomUUID is missing on older iPads (Safari before 15.4), which donors often use.
+function neueId(): string {
+  if (typeof crypto.randomUUID === 'function') return crypto.randomUUID();
+  const b = crypto.getRandomValues(new Uint8Array(16));
+  b[6] = (b[6] & 0x0f) | 0x40;
+  b[8] = (b[8] & 0x3f) | 0x80;
+  const h = [...b].map((x) => x.toString(16).padStart(2, '0')).join('');
+  return `${h.slice(0, 8)}-${h.slice(8, 12)}-${h.slice(12, 16)}-${h.slice(16, 20)}-${h.slice(20)}`;
+}
+
 const geraetName = (g: GeraetEingabe, i: number) => [g.marke, g.modell].filter(Boolean).join(' ') || `Gerät ${i + 1}`;
 
 function Ergebnisbox({ r }: { r: Pruefergebnis }) {
@@ -134,7 +144,8 @@ export function GeraeteCheck({ abschluss, absenden = false }: { abschluss?: Reac
   const [erkl, setErkl] = useState({ eigentum: false, daten: false });
   const [erklFehler, setErklFehler] = useState(false);
   const [website, setWebsite] = useState('');
-  const [schluessel, setSchluessel] = useState<string | null>(null);
+  // Same content keeps the same key (safe retry); any change to devices or contact gets a new one.
+  const [schluessel, setSchluessel] = useState<{ key: string; inhalt: string } | null>(null);
   const [sendFehler, setSendFehler] = useState<string | null>(null);
   const [vorgangsnummer, setVorgangsnummer] = useState<string | null>(null);
   const [sendet, startSenden] = useTransition();
@@ -165,19 +176,20 @@ export function GeraeteCheck({ abschluss, absenden = false }: { abschluss?: Reac
 
   // Puts the current device on the list unless it is rated not suitable; either way the draft ends.
   const uebernehmeEntwurf = () => {
-    if (entwurf && r.ergebnis !== 'nichtGeeignet') setListe((l) => [...l, { eingabe: geraet, r }]);
+    if (entwurf && r.ergebnis !== 'nichtGeeignet') setListe((l) => (l.length < MAX_GERAETE ? [...l, { eingabe: geraet, r }] : l));
     setGeraet(LEER);
     setEntwurf(false);
   };
   const neuesGeraet = () => { uebernehmeEntwurf(); setEntwurf(true); gehe(0); };
-  const anzahlNachUebernahme = liste.length + (entwurf && r.ergebnis !== 'nichtGeeignet' ? 1 : 0);
+  const anzahlNachUebernahme = Math.min(MAX_GERAETE, liste.length + (entwurf && r.ergebnis !== 'nichtGeeignet' ? 1 : 0));
 
   const zuAbsenden = () => {
     const f = pruefeKontakt(kontakt);
     setKontaktFehler(f);
     const erster = KONTAKT_FELDER.find((k) => f[k.key]);
     if (erster) { document.getElementById(`${id}-${erster.key}`)?.focus(); return; }
-    setSchluessel((s) => s ?? crypto.randomUUID());
+    const inhalt = JSON.stringify([liste.map((d) => d.eingabe), kontakt]);
+    setSchluessel((s) => (s && s.inhalt === inhalt ? s : { key: neueId(), inhalt }));
     gehe(ABSENDEN);
   };
 
@@ -188,7 +200,7 @@ export function GeraeteCheck({ abschluss, absenden = false }: { abschluss?: Reac
     startSenden(async () => {
       try {
         const antwort = await sendeAnfrage({
-          idempotencyKey: schluessel, geraete: liste.map((d) => d.eingabe), kontakt, erklaerungen: erkl, website,
+          idempotencyKey: schluessel?.key, geraete: liste.map((d) => d.eingabe), kontakt, erklaerungen: erkl, website,
         });
         if (antwort.ok) { moved.current = true; setVorgangsnummer(antwort.vorgangsnummer); }
         else setSendFehler(antwort.fehler);
@@ -298,7 +310,9 @@ export function GeraeteCheck({ abschluss, absenden = false }: { abschluss?: Reac
             {!entwurf ? 'Ihre Geräte sehen Sie oben in der Liste.'
               : r.ergebnis === 'nichtGeeignet'
                 ? (liste.length > 0 ? 'Dieses Gerät nehmen wir nicht in Ihre Anfrage auf.' : 'Dieses Gerät können wir leider nicht annehmen. Sie können ein anderes Gerät erfassen.')
-                : 'Möchten Sie noch ein Gerät spenden? Dann erfassen Sie es jetzt, bevor Sie Ihre Kontaktdaten angeben.'}
+                : anzahlNachUebernahme >= MAX_GERAETE
+                  ? `Pro Anfrage sind höchstens ${MAX_GERAETE} Geräte möglich. Für weitere Geräte senden Sie bitte eine zweite Anfrage.`
+                  : 'Möchten Sie noch ein Gerät spenden? Dann erfassen Sie es jetzt, bevor Sie Ihre Kontaktdaten angeben.'}
           </p>
         )}
 
@@ -376,7 +390,7 @@ export function GeraeteCheck({ abschluss, absenden = false }: { abschluss?: Reac
           )}
           {schritt === ERGEBNIS && absenden && (
             <>
-              <button type="button" className={styles.back} onClick={neuesGeraet}>Weiteres Gerät erfassen</button>
+              <button type="button" className={styles.back} onClick={neuesGeraet} disabled={anzahlNachUebernahme >= MAX_GERAETE}>Weiteres Gerät erfassen</button>
               <button type="submit" className="btn" disabled={anzahlNachUebernahme === 0}>Weiter zu Kontakt</button>
             </>
           )}
