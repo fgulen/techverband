@@ -2,7 +2,7 @@
 
 Two sites in one repo:
 
-- **weiterwert.de**: static `index.html` plus legal pages. Vercel project `techverband`. Every push to `master` deploys it. Vercel skips the build when only `platform/`, `docs/`, `tests/`, `*.md` or `package.json` changed (project setting "Ignored Build Step"). `.vercelignore` publishes only the site files.
+- **weiterwert.de**: static `index.html` plus legal pages. Vercel project `techverband`. Every push to `master` deploys it. Vercel skips the build when only `platform/`, `docs/`, `tests/`, `scripts/`, `*.md` or `package.json` changed. The project setting "Ignored Build Step" downloads `scripts/vercel-ignore.mjs` from GitHub at the deployed commit, because `.vercelignore` removes `.git` before that step runs. The setting is limited to 256 characters. `.vercelignore` publishes only the site files.
 - **spenden.weiterwert.de**: Next.js app in `platform/`. Vercel project `weiterwert-platform`. It is not connected to Git: deploy it from `platform/` with `vercel deploy --prod --yes`. `platform/.vercelignore` keeps tests, e2e and SQL out of the upload.
 
 Session log: `docs/GUNLUK.md` (Turkish).
