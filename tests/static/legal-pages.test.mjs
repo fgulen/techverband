@@ -3,27 +3,34 @@ import assert from 'node:assert/strict';
 import { readFileSync, existsSync } from 'node:fs';
 
 const read = f => readFileSync(new URL(`../../${f}`, import.meta.url), 'utf8');
-const LEGAL = ['impressum.html', 'datenschutz.html'];
-const complete = f => !/⟦FEHLT/.test(read(f));
+const LEGAL = ['impressum.html', 'datenschutz.html', 'barrierefreiheit.html'];
 
-// Invariant: a legal page is linked and deployed only once it has no placeholders left.
-test('incomplete legal pages are neither linked nor deployed; complete ones are both', () => {
+// Decision 2026-10-23: legal pages go live with open fields marked "wird ausgefüllt".
+// Invariant: every legal page is linked in the footer and deployed.
+test('every legal page is linked in the footer and deployed', () => {
   const html = read('index.html');
   const ignore = read('.vercelignore').split(/\r?\n/).map(l => l.trim());
   for (const f of LEGAL) {
-    const linked = html.includes(`href="${f}"`);
-    const deployed = ignore.includes(`!/${f}`);
-    if (complete(f)) {
-      assert.ok(linked && deployed, `${f} is complete: link it and deploy it`);
-    } else {
-      assert.ok(!linked && !deployed, `${f} still has placeholders: must not be linked or deployed`);
-    }
+    assert.ok(html.includes(`href="${f}"`), `${f} not linked in footer`);
+    assert.ok(ignore.includes(`!/${f}`), `${f} not deployed`);
   }
 });
 
-test('footer says legal pages follow while any is incomplete', () => {
-  const html = read('index.html');
-  if (!LEGAL.every(complete)) assert.match(html, /data-i18n="footerLegalHint"/);
+test('open fields use the marker, not raw placeholders', () => {
+  for (const f of LEGAL) {
+    const s = read(f);
+    assert.doesNotMatch(s, /⟦FEHLT|\[ausfüllen\]/, `${f} has a raw placeholder`);
+    for (const m of s.matchAll(/<span class="tbd">([^<]*)<\/span>/g)) {
+      assert.match(m[1], /– wird ausgefüllt$/, `${f}: marker text`);
+    }
+  }
+  assert.doesNotMatch(read('index.html'), /footerLegalHint/);
+});
+
+test('no cookie banner or AI claims while the site uses neither', () => {
+  const s = read('datenschutz.html');
+  assert.match(s, /keine Cookies/);
+  assert.match(s, /keine KI-Funktionen/);
 });
 
 test('impressum states legal form and responsibility', () => {
@@ -49,9 +56,7 @@ test('datenschutz does not claim an unverified processing agreement with Vercel'
 test('legal pages link back and to each other', () => {
   for (const f of LEGAL) {
     const s = read(f);
-    assert.match(s, /href="index.html"/);
-    assert.match(s, /href="impressum.html"/);
-    assert.match(s, /href="datenschutz.html"/);
+    for (const target of ['index.html', ...LEGAL]) assert.match(s, new RegExp(`href="${target}"`));
     assert.doesNotMatch(s, /fonts\.(googleapis|gstatic)\.com/);
   }
 });

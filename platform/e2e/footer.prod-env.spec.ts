@@ -1,8 +1,9 @@
 import { test, expect } from '@playwright/test';
 
-test('footer says legal pages follow and does not link to empty stubs', async ({ page }) => {
+test('footer links to the legal pages on the main site, not to the empty local stubs', async ({ page }) => {
   await page.goto('/spenden');
   const footer = page.getByRole('contentinfo');
-  await expect(footer).toContainText('Impressum und Datenschutz folgen.');
-  await expect(footer.getByRole('link', { name: 'Impressum' })).toHaveCount(0);
+  for (const [name, file] of [['Impressum', 'impressum'], ['Datenschutzerklärung', 'datenschutz'], ['Barrierefreiheit', 'barrierefreiheit']]) {
+    await expect(footer.getByRole('link', { name })).toHaveAttribute('href', `https://weiterwert.de/${file}.html`);
+  }
 });

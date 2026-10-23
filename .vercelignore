@@ -1,7 +1,10 @@
 # Live site (techverband project): publish only the static site.
 # Everything else (docs, tests, platform/, package.json, local env files) stays private.
-# Legal pages are added here (!/impressum.html, !/datenschutz.html) only once they have no placeholders;
-# tests/static/legal-pages.test.mjs enforces this.
+# Legal pages are published with open fields marked "wird ausgefüllt" (decision 2026-10-23);
+# tests/static/legal-pages.test.mjs keeps footer links and this list in sync.
 /*
 !/index.html
 !/assets
+!/impressum.html
+!/datenschutz.html
+!/barrierefreiheit.html
