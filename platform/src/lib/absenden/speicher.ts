@@ -52,9 +52,10 @@ const attrappe: Speicher = (() => {
   };
 })();
 
+// The test environment never writes to the real database, even if the key is in .env.local.
 export function waehleSpeicher(): Speicher | null {
-  if (speicherKonfiguriert()) return supabase;
-  return getAppEnv() === 'test' ? attrappe : null;
+  if (getAppEnv() === 'test') return attrappe;
+  return speicherKonfiguriert() ? supabase : null;
 }
 
 /** Whether the page offers the contact and submit steps. */

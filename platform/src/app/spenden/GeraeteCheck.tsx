@@ -186,11 +186,16 @@ export function GeraeteCheck({ abschluss, absenden = false }: { abschluss?: Reac
     setErklFehler(false);
     setSendFehler(null);
     startSenden(async () => {
-      const antwort = await sendeAnfrage({
-        idempotencyKey: schluessel, geraete: liste.map((d) => d.eingabe), kontakt, erklaerungen: erkl, website,
-      });
-      if (antwort.ok) { moved.current = true; setVorgangsnummer(antwort.vorgangsnummer); }
-      else setSendFehler(antwort.fehler);
+      try {
+        const antwort = await sendeAnfrage({
+          idempotencyKey: schluessel, geraete: liste.map((d) => d.eingabe), kontakt, erklaerungen: erkl, website,
+        });
+        if (antwort.ok) { moved.current = true; setVorgangsnummer(antwort.vorgangsnummer); }
+        else setSendFehler(antwort.fehler);
+      } catch {
+        // Lost connection or an outdated page after a deploy; the same key makes a retry safe.
+        setSendFehler('Die Verbindung ist fehlgeschlagen. Ihre Angaben sind noch da. Bitte versuchen Sie es erneut.');
+      }
     });
   };
 

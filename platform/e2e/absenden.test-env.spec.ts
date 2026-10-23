@@ -105,3 +105,15 @@ test('a device rated not suitable is left out when another device is on the list
   await expect(list.getByRole('listitem')).toHaveCount(1);
   await expect(list).not.toContainText('Kaputt');
 });
+
+test('a lost connection keeps the answers and shows a retry message', async ({ page }) => {
+  await bisAbsenden(page);
+  await erklaeren(page);
+  await page.route('**/spenden', (route) => (route.request().headers()['next-action'] ? route.abort() : route.continue()));
+  await page.getByRole('button', { name: 'Anfrage absenden' }).click();
+  await expect(page.getByRole('alert').filter({ hasText: 'Bitte versuchen Sie es erneut' })).toBeVisible();
+  await expect(page.getByText('Erika Muster')).toBeVisible();
+  await page.unroute('**/spenden');
+  await page.getByRole('button', { name: 'Anfrage absenden' }).click();
+  await expect(page.getByText(/^WW-\d{4}-\d{6}$/)).toBeVisible();
+});

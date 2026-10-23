@@ -133,3 +133,6 @@ revoke execute on function public.submit_donation(jsonb) from public, anon, auth
 revoke execute on function public.mark_notification(uuid, boolean, text) from public, anon, authenticated;
 grant execute on function public.submit_donation(jsonb) to service_role;
 grant execute on function public.mark_notification(uuid, boolean, text) to service_role;
+
+-- Make the new functions reachable through the API right away.
+notify pgrst, 'reload schema';

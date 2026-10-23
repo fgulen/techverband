@@ -27,8 +27,8 @@ export default defineConfig({
     },
   ],
   webServer: [
-    server(3100, { NEXT_PUBLIC_APP_ENV: 'test', BASIC_AUTH_USER: TEST_AUTH.username, BASIC_AUTH_PASSWORD: TEST_AUTH.password }, '.next-test'),
+    server(3100, { NEXT_PUBLIC_APP_ENV: 'test', BASIC_AUTH_USER: TEST_AUTH.username, BASIC_AUTH_PASSWORD: TEST_AUTH.password, MAIL_USER: '', MAIL_PASSWORD: '', MAIL_TO: '' }, '.next-test'),
     // Explicit empty credentials: process env wins over a developer's .env.local.
-    server(3200, { NEXT_PUBLIC_APP_ENV: 'production', BASIC_AUTH_USER: '', BASIC_AUTH_PASSWORD: '' }, '.next-prod'),
+    server(3200, { NEXT_PUBLIC_APP_ENV: 'production', BASIC_AUTH_USER: '', BASIC_AUTH_PASSWORD: '', SUPABASE_SECRET_KEY: '', MAIL_USER: '', MAIL_PASSWORD: '', MAIL_TO: '' }, '.next-prod'),
   ],
 });

@@ -29,6 +29,8 @@ export function mailText(nr: string, kontakt: Kontakt, geraete: { eingabe: Gerae
 export async function sendeMail(betreff: string, text: string): Promise<void> {
   const transport = nodemailer.createTransport({
     host: 'smtp.gmail.com', port: 465, secure: true,
+    // The donor waits for this call; a hanging server must not keep them waiting for minutes.
+    connectionTimeout: 10_000, greetingTimeout: 10_000, socketTimeout: 10_000,
     auth: { user: process.env.MAIL_USER, pass: process.env.MAIL_PASSWORD },
   });
   await transport.sendMail({ from: process.env.MAIL_USER, to: process.env.MAIL_TO, subject: betreff, text });
