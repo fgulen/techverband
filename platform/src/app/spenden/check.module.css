@@ -40,7 +40,7 @@
 .toggleOpt{-webkit-tap-highlight-color:transparent;position:relative;display:flex;align-items:center;justify-content:center;gap:10px;min-height:56px;border-radius:12px;cursor:pointer;font-weight:600;color:var(--muted);transition:background .15s ease,color .15s ease,box-shadow .15s ease;}
 .toggleOpt input{position:absolute;opacity:0;inset:0;margin:0;cursor:pointer;}
 .toggleOpt svg{width:26px;height:26px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;}
-.toggleOpt:has(input:checked){background:var(--surface);color:var(--brand-navy);box-shadow:var(--shadow),0 0 0 1px var(--line);}
+.toggleOpt:has(input:checked){background:var(--brand-navy);color:var(--on-accent);box-shadow:var(--shadow);}
 .toggleOpt:has(input:focus-visible){outline:3px solid var(--focus);outline-offset:2px;}
 .nav{display:flex;flex-wrap:wrap;gap:10px;align-items:center;}
 .back{font:inherit;font-weight:600;padding:12px 20px;border-radius:999px;border:1px solid var(--line-strong);background:var(--surface);color:var(--ink);cursor:pointer;}
